@@ -409,13 +409,9 @@ async function submitResult() {
   };
 
   try {
-    // Apps Script: no-cors 모드 (리다이렉트 처리 방식상 필요)
-    await fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: JSON.stringify(submission),
-      headers: { 'Content-Type': 'text/plain' }
-    });
+    // Apps Script: GET + payload 파라미터 (POST 리다이렉트 이슈 우회)
+    const url = APPS_SCRIPT_URL + '?payload=' + encodeURIComponent(JSON.stringify(submission));
+    await fetch(url, { mode: 'no-cors' });
 
     // localStorage 마킹 (중복 방지)
     markSubmitted(userInfo.email, userInfo.name, score);
