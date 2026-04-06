@@ -409,9 +409,9 @@ async function submitResult() {
   };
 
   try {
-    // Apps Script: GET + payload (새 배포에서 파라미터 정상 수신 확인됨)
+    // Apps Script: GET + payload + no-cors (CORS 우회, 응답 못 읽지만 저장은 됨)
     const url = APPS_SCRIPT_URL + '?payload=' + encodeURIComponent(JSON.stringify(submission));
-    await fetch(url);
+    await fetch(url, { mode: 'no-cors' });
 
     // localStorage 마킹 (중복 방지)
     markSubmitted(userInfo.email, userInfo.name, score);
