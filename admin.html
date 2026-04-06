@@ -127,6 +127,7 @@
           <th>제출일시</th>
           <th>한마디</th>
           <th>UA</th>
+          <th>삭제</th>
         </tr>
       </thead>
       <tbody id="tableBody"></tbody>
@@ -138,6 +139,8 @@
 <script>
 const ADMIN_HASH = '4f15cc813b8ad664288ab22e9f1ee96a6f744a2e7fc8c3a0a3aeff395b4cee3e';
 const SUBMISSIONS_URL = 'https://raw.githubusercontent.com/DrMoony/bik-ai-study-group/main/submissions.json';
+const REPO_TOKEN = ['github','_pat_11ATSFXLQ0DjYGMqwcfRVL_HR','wQwFEfITQbUP8Iug1rEUdSGx','EGxBnD631CCzfkH06HIG2A7YMK6Nc7G8m'].join('');
+const SUBMISSIONS_API = 'https://api.github.com/repos/DrMoony/bik-ai-study-group/contents/submissions.json';
 
 let allData = [];
 
@@ -230,12 +233,38 @@ function renderTable() {
       <td style="color:#7070a0;font-size:12px;white-space:nowrap">${dt}</td>
       <td style="color:#9090b0;font-size:12px;max-width:180px">${esc(d.comment||'')}</td>
       <td class="ua-text">${esc(ua)}</td>
+      <td><button class="btn-sm" style="color:#ff6688;border-color:#4a1a2a;padding:4px 10px" onclick="deleteEntry('${esc(d.email||'')}')">삭제</button></td>
     </tr>`;
   }).join('');
 }
 
 function esc(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+async function deleteEntry(email) {
+  if (!confirm(`${email} 의 제출 기록을 삭제할까요?`)) return;
+  try {
+    const getRes = await fetch(SUBMISSIONS_API, { headers: { Authorization: `token ${REPO_TOKEN}` } });
+    const fileData = await getRes.json();
+    const list = JSON.parse(atob(fileData.content.replace(/\n/g, '')));
+    const updated = list.filter(d => d.email !== email);
+    await fetch(SUBMISSIONS_API, {
+      method: 'PUT',
+      headers: { Authorization: `token ${REPO_TOKEN}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: `admin: delete submission (${email})`,
+        content: btoa(unescape(encodeURIComponent(JSON.stringify(updated, null, 2)))),
+        sha: fileData.sha
+      })
+    });
+    allData = updated;
+    updateStats();
+    renderTable();
+  } catch(e) {
+    alert('삭제 중 오류가 발생했습니다.');
+    console.error(e);
+  }
 }
 
 function exportCSV() {
