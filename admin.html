@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — AI Study Group</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0a0a14; color: #e8e8f0; min-height: 100vh;
+    }
+
+    /* LOGIN */
+    #loginWrap {
+      display: flex; align-items: center; justify-content: center; min-height: 100vh;
+    }
+    .login-box {
+      background: #1a1a2e; border: 1px solid #2a2a4a; border-radius: 16px;
+      padding: 40px; width: 340px; text-align: center;
+    }
+    .login-box h2 { font-size: 20px; margin-bottom: 8px; }
+    .login-box p  { color: #7070a0; font-size: 13px; margin-bottom: 28px; }
+    .login-box input {
+      width: 100%; padding: 12px 16px; background: #0f0f1a;
+      border: 1px solid #3a3a6a; border-radius: 8px; color: #e8e8f0;
+      font-size: 15px; outline: none; margin-bottom: 12px; transition: border-color 0.2s;
+      text-align: center; letter-spacing: 3px;
+    }
+    .login-box input:focus { border-color: #6666dd; }
+    .login-box input.error { border-color: #ff4466; }
+    .btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #4444cc, #6644ee); color: white; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; }
+    .btn:hover { opacity: 0.9; }
+    .err-msg { color: #ff4466; font-size: 13px; margin-top: 10px; display: none; }
+    .err-msg.show { display: block; }
+
+    /* DASHBOARD */
+    #dashboard { display: none; padding: 32px; max-width: 1100px; margin: 0 auto; }
+    .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+    .dash-header h1 { font-size: 22px; }
+    .dash-header .meta { color: #7070a0; font-size: 13px; }
+    .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 28px; }
+    .stat-card { background: #1a1a2e; border: 1px solid #2a2a4a; border-radius: 12px; padding: 18px; text-align: center; }
+    .stat-card .val { font-size: 32px; font-weight: 800; color: #8888ff; }
+    .stat-card .lbl { font-size: 12px; color: #7070a0; margin-top: 4px; }
+
+    /* TABLE */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead tr { background: #1a1a2e; }
+    th { padding: 12px 14px; text-align: left; color: #7070a0; font-weight: 600; letter-spacing: 0.5px; white-space: nowrap; border-bottom: 1px solid #2a2a4a; }
+    td { padding: 12px 14px; border-bottom: 1px solid #1a1a2e; vertical-align: top; }
+    tr:hover td { background: #13132a; }
+    .score-badge {
+      display: inline-block; padding: 3px 10px; border-radius: 20px;
+      font-size: 12px; font-weight: 700;
+    }
+    .score-high { background: #0d3d2a; color: #44ff99; }
+    .score-mid  { background: #2a2a0d; color: #ffcc44; }
+    .score-low  { background: #3d0d1a; color: #ff6688; }
+    .level-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; background: #1e1e3a; color: #8888ff; border: 1px solid #4a4a8a; }
+    .ua-text { color: #5050a0; font-size: 11px; max-width: 220px; word-break: break-all; }
+
+    .toolbar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+    .toolbar input {
+      padding: 8px 14px; background: #1a1a2e; border: 1px solid #3a3a6a;
+      border-radius: 8px; color: #e8e8f0; font-size: 14px; outline: none; min-width: 220px;
+    }
+    .toolbar input:focus { border-color: #6666dd; }
+    .btn-sm { padding: 8px 16px; background: #252545; border: 1px solid #3a3a6a; border-radius: 8px; color: #b0b0ee; font-size: 13px; cursor: pointer; }
+    .btn-sm:hover { background: #30305a; }
+    .btn-refresh { background: #1a2a1a; border-color: #2a4a2a; color: #44cc88; }
+    .btn-refresh:hover { background: #1e351e; }
+    .empty-msg { text-align: center; padding: 60px; color: #5050a0; }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginWrap">
+  <div class="login-box">
+    <div style="font-size:32px;margin-bottom:16px">🔐</div>
+    <h2>Admin</h2>
+    <p>AI Study Group 제출 기록</p>
+    <input type="password" id="pwInput" placeholder="비밀번호" onkeydown="if(event.key==='Enter')login()" />
+    <button class="btn" onclick="login()">로그인</button>
+    <div class="err-msg" id="errMsg">비밀번호가 올바르지 않습니다.</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <div class="dash-header">
+    <div>
+      <h1>📋 제출 기록</h1>
+      <div class="meta" id="lastUpdated"></div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn-sm btn-refresh" onclick="loadData()">↻ 새로고침</button>
+      <button class="btn-sm" onclick="logout()">로그아웃</button>
+    </div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="val" id="statTotal">-</div><div class="lbl">총 제출</div></div>
+    <div class="stat-card"><div class="val" id="statAvg">-</div><div class="lbl">평균 점수</div></div>
+    <div class="stat-card"><div class="val" id="statHigh">-</div><div class="lbl">8점 이상</div></div>
+    <div class="stat-card"><div class="val" id="statToday">-</div><div class="lbl">오늘 제출</div></div>
+  </div>
+
+  <div class="toolbar">
+    <input type="text" id="searchInput" placeholder="이름 / 이메일 / 팀으로 검색..." oninput="renderTable()" />
+    <button class="btn-sm" onclick="exportCSV()">CSV 다운로드</button>
+  </div>
+
+  <div class="table-wrap">
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>이름</th>
+          <th>이메일</th>
+          <th>팀</th>
+          <th>직무</th>
+          <th>점수</th>
+          <th>레벨</th>
+          <th>제출일시</th>
+          <th>한마디</th>
+          <th>UA</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+    <div class="empty-msg" id="emptyMsg" style="display:none">제출된 기록이 없습니다.</div>
+  </div>
+</div>
+
+<script>
+const ADMIN_HASH = '4f15cc813b8ad664288ab22e9f1ee96a6f744a2e7fc8c3a0a3aeff395b4cee3e';
+const SUBMISSIONS_URL = 'https://raw.githubusercontent.com/DrMoony/bik-ai-study-group/main/submissions.json';
+
+let allData = [];
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function login() {
+  const pw = document.getElementById('pwInput').value;
+  const hash = await sha256(pw);
+  if (hash === ADMIN_HASH) {
+    sessionStorage.setItem('bik_admin', '1');
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    loadData();
+  } else {
+    document.getElementById('pwInput').classList.add('error');
+    document.getElementById('errMsg').classList.add('show');
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem('bik_admin');
+  location.reload();
+}
+
+// 세션 유지
+if (sessionStorage.getItem('bik_admin')) {
+  document.getElementById('loginWrap').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  loadData();
+}
+
+async function loadData() {
+  try {
+    const res = await fetch(SUBMISSIONS_URL + '?t=' + Date.now());
+    allData = await res.json();
+    updateStats();
+    renderTable();
+    document.getElementById('lastUpdated').textContent = '마지막 업데이트: ' + new Date().toLocaleString('ko-KR');
+  } catch(e) {
+    alert('데이터를 불러오지 못했습니다.');
+  }
+}
+
+function updateStats() {
+  const total = allData.length;
+  const avg   = total ? (allData.reduce((s, d) => s + (d.scoreNum || 0), 0) / total).toFixed(1) : '-';
+  const high  = allData.filter(d => (d.scoreNum || 0) >= 8).length;
+  const today = allData.filter(d => d.submittedAt && d.submittedAt.startsWith(new Date().toISOString().slice(0,10))).length;
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statAvg').textContent   = avg;
+  document.getElementById('statHigh').textContent  = high;
+  document.getElementById('statToday').textContent = today;
+}
+
+function renderTable() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const filtered = allData.filter(d =>
+    !q ||
+    (d.name  || '').toLowerCase().includes(q) ||
+    (d.email || '').toLowerCase().includes(q) ||
+    (d.team  || '').toLowerCase().includes(q)
+  );
+
+  const body = document.getElementById('tableBody');
+  const empty = document.getElementById('emptyMsg');
+
+  if (!filtered.length) {
+    body.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  body.innerHTML = filtered.map((d, i) => {
+    const sn = d.scoreNum || 0;
+    const scoreClass = sn >= 8 ? 'score-high' : sn >= 5 ? 'score-mid' : 'score-low';
+    const dt = d.submittedAt ? new Date(d.submittedAt).toLocaleString('ko-KR', {month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}) : '-';
+    const ua = (d.userAgent || '').replace(/\(.*?\)/g, '').replace(/  +/g, ' ').trim().slice(0, 60);
+    return `<tr>
+      <td style="color:#5050a0">${i+1}</td>
+      <td><strong>${esc(d.name||'')}</strong></td>
+      <td style="color:#8888ff;font-size:12px">${esc(d.email||'')}</td>
+      <td>${esc(d.team||'')}</td>
+      <td style="color:#9090b0;font-size:12px">${esc(d.job||'')}</td>
+      <td><span class="score-badge ${scoreClass}">${d.score||'-'}</span></td>
+      <td><span class="level-badge">${d.level||'-'}</span></td>
+      <td style="color:#7070a0;font-size:12px;white-space:nowrap">${dt}</td>
+      <td style="color:#9090b0;font-size:12px;max-width:180px">${esc(d.comment||'')}</td>
+      <td class="ua-text">${esc(ua)}</td>
+    </tr>`;
+  }).join('');
+}
+
+function esc(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function exportCSV() {
+  const cols = ['이름','이메일','팀','직무','점수','레벨','제출일시','한마디','UserAgent'];
+  const rows = allData.map(d => [
+    d.name, d.email, d.team, d.job, d.score, d.level,
+    d.submittedAt ? new Date(d.submittedAt).toLocaleString('ko-KR') : '',
+    d.comment, d.userAgent
+  ].map(v => `"${String(v||'').replace(/"/g,'""')}"`).join(','));
+  const csv = '\uFEFF' + [cols.join(','), ...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = `bik-ai-quiz-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+</script>
+</body>
+</html>
