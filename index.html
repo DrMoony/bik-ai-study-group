@@ -122,7 +122,6 @@
   </style>
 </head>
 <body>
-<iframe name="hidden_submit" style="display:none"></iframe>
 <div class="container">
 
   <!-- ALREADY SUBMITTED -->
@@ -212,7 +211,7 @@
 
 </div>
 <script>
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwtdbSjfe1Kx1zCIGqj886DTHWcmQdobryiiypofmTkLy-SsdNwWRgojs761MNzLaqj3Q/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxRnbt7K0UgnFV-GUW8Sq1PnbjnBmsU9HpA6iHhwAzoqEsFs8L6OV6zP_PRv4ZoO6G06Q/exec';
 
 // ── 중복 제출 방지 (이메일 기반) ─────────────────────────
 function checkAlreadySubmitted(email) {
@@ -410,20 +409,9 @@ async function submitResult() {
   };
 
   try {
-    // Apps Script: hidden iframe form submit (가장 신뢰할 수 있는 방법)
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = APPS_SCRIPT_URL;
-    form.target = 'hidden_submit';
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = 'payload';
-    input.value = JSON.stringify(submission);
-    form.appendChild(input);
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
-    await new Promise(r => setTimeout(r, 1500)); // 제출 대기
+    // Apps Script: GET + payload (새 배포에서 파라미터 정상 수신 확인됨)
+    const url = APPS_SCRIPT_URL + '?payload=' + encodeURIComponent(JSON.stringify(submission));
+    await fetch(url);
 
     // localStorage 마킹 (중복 방지)
     markSubmitted(userInfo.email, userInfo.name, score);
