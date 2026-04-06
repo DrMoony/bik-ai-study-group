@@ -197,8 +197,11 @@
       <div id="breakdownList"></div>
     </div>
     <div class="submit-form">
-      <p style="font-size:13px;color:#7070a0;margin-bottom:12px;text-align:left">결과를 제출하면 스터디 리드에게 전달됩니다.</p>
-      <textarea id="inputComment" placeholder="한마디 (스터디에서 꼭 배우고 싶은 것, 질문 등 — 선택사항)"></textarea>
+      <p style="font-size:14px;color:#b0b0cc;margin-bottom:16px;text-align:left;font-weight:600">간단한 인터뷰</p>
+      <p style="font-size:12px;color:#7070a0;margin-bottom:10px;text-align:left">아래 질문에 자유롭게 답해주세요 (레벨 배정 참고용)</p>
+      <textarea id="inputUsecase" placeholder="1. AI 도구를 업무에 써본 적 있나요? 어떤 용도로? (예: ChatGPT로 이메일 초안, 논문 요약 등)"></textarea>
+      <textarea id="inputWant" placeholder="2. 이 스터디에서 가장 배우고 싶은 것은? (예: 데이터 자동 정리, 나만의 AI 도구 만들기 등)"></textarea>
+      <textarea id="inputComment" placeholder="3. 요즘 'AI' 대신 'LLM'이라고 부르자는 움직임이 있습니다. 이에 대한 본인의 생각은? (자유 답변)"></textarea>
       <button class="btn-primary" id="submitBtn" onclick="submitResult()">결과 제출하기</button>
       <div class="saving-msg" id="savingMsg">⏳ 저장 중...</div>
     </div>
@@ -400,6 +403,8 @@ async function submitResult() {
     score:     `${score}/10`,
     scoreNum:  score,
     level:     score >= 8 ? 'L2~L3' : score >= 5 ? 'L1~L2' : 'L1',
+    usecase:   document.getElementById('inputUsecase').value || '',
+    want:      document.getElementById('inputWant').value || '',
     comment:   document.getElementById('inputComment').value || '',
     userAgent: navigator.userAgent,
     submittedAt: new Date().toISOString(),
