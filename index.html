@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Study Group — 사전 퀴즈</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0f0f1a;
+      color: #e8e8f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 640px;
+      padding: 24px;
+    }
+
+    /* ── INTRO ── */
+    #intro {
+      text-align: center;
+    }
+    #intro .badge {
+      display: inline-block;
+      background: #1e1e3a;
+      border: 1px solid #4a4a8a;
+      color: #8888ff;
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+    #intro h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    #intro p {
+      color: #9090b0;
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+    #intro .rules {
+      background: #1a1a2e;
+      border: 1px solid #2a2a4a;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: left;
+      margin-bottom: 32px;
+    }
+    #intro .rules li {
+      font-size: 14px;
+      color: #b0b0cc;
+      margin-bottom: 10px;
+      padding-left: 8px;
+      list-style: none;
+    }
+    #intro .rules li::before {
+      content: '▸ ';
+      color: #6666dd;
+    }
+
+    /* ── NAME FORM ── */
+    .name-form {
+      margin-bottom: 24px;
+    }
+    .name-form input, .name-form select {
+      width: 100%;
+      padding: 12px 16px;
+      background: #1a1a2e;
+      border: 1px solid #3a3a6a;
+      border-radius: 8px;
+      color: #e8e8f0;
+      font-size: 15px;
+      margin-bottom: 10px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .name-form input:focus, .name-form select:focus {
+      border-color: #6666dd;
+    }
+    .name-form select option { background: #1a1a2e; }
+
+    /* ── BUTTON ── */
+    .btn-start {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #4444cc, #6644ee);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .btn-start:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-start:active { transform: translateY(0); }
+
+    /* ── QUIZ ── */
+    #quiz { display: none; }
+
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .progress-text {
+      font-size: 13px;
+      color: #7070a0;
+    }
+    .timer-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .timer-number {
+      font-size: 28px;
+      font-weight: 800;
+      color: #6666dd;
+      min-width: 40px;
+      text-align: right;
+      transition: color 0.3s;
+    }
+    .timer-number.urgent { color: #ff4466; }
+
+    .progress-bar-bg {
+      height: 4px;
+      background: #2a2a4a;
+      border-radius: 2px;
+      margin-bottom: 28px;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4444cc, #6644ee);
+      border-radius: 2px;
+      transition: width 0.3s;
+    }
+
+    .question-box {
+      background: #1a1a2e;
+      border: 1px solid #2a2a4a;
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+    .question-num {
+      font-size: 12px;
+      color: #6666aa;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+    .question-text {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .option-btn {
+      padding: 14px 18px;
+      background: #1a1a2e;
+      border: 1px solid #2a2a4a;
+      border-radius: 10px;
+      color: #e8e8f0;
+      font-size: 15px;
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, transform 0.1s;
+    }
+    .option-btn:hover:not(:disabled) {
+      background: #252545;
+      border-color: #5555aa;
+      transform: translateX(4px);
+    }
+    .option-btn.correct {
+      background: #0d3d2a;
+      border-color: #22cc77;
+      color: #44ff99;
+    }
+    .option-btn.wrong {
+      background: #3d0d1a;
+      border-color: #cc2244;
+      color: #ff4466;
+    }
+    .option-btn.reveal {
+      background: #1a2a1a;
+      border-color: #22cc77;
+      color: #44ff99;
+      opacity: 0.6;
+    }
+    .option-btn:disabled { cursor: default; }
+
+    .feedback {
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.5;
+      display: none;
+    }
+    .feedback.show { display: block; }
+    .feedback.correct-fb { background: #0a2a1a; color: #44ff99; border: 1px solid #22cc4422; }
+    .feedback.wrong-fb  { background: #2a0a14; color: #ff8899; border: 1px solid #cc224422; }
+
+    .next-btn {
+      width: 100%;
+      margin-top: 18px;
+      padding: 14px;
+      background: #252545;
+      border: 1px solid #3a3a6a;
+      border-radius: 10px;
+      color: #b0b0ee;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.15s;
+      display: none;
+    }
+    .next-btn.show { display: block; }
+    .next-btn:hover { background: #30305a; }
+
+    /* ── TIMEOUT OVERLAY ── */
+    .timeout-msg {
+      text-align: center;
+      padding: 20px;
+      font-size: 15px;
+      color: #ff6688;
+      display: none;
+    }
+    .timeout-msg.show { display: block; }
+
+    /* ── RESULT ── */
+    #result { display: none; text-align: center; }
+    .result-score {
+      font-size: 72px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #4444cc, #aa44ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 20px 0 8px;
+    }
+    .result-label {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .result-sub {
+      color: #7070a0;
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    .result-breakdown {
+      background: #1a1a2e;
+      border: 1px solid #2a2a4a;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 28px;
+      text-align: left;
+    }
+    .result-breakdown h3 {
+      font-size: 14px;
+      color: #7070a0;
+      margin-bottom: 14px;
+      letter-spacing: 1px;
+    }
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1e1e38;
+    }
+    .result-row:last-child { border-bottom: none; margin-bottom: 0; }
+    .result-row .q-text { color: #b0b0cc; flex: 1; padding-right: 12px; }
+    .result-row .q-status { font-weight: 600; white-space: nowrap; }
+    .result-row .q-status.ok { color: #44ff99; }
+    .result-row .q-status.fail { color: #ff4466; }
+
+    .submit-form { margin-bottom: 20px; }
+    .submit-form input, .submit-form textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: #1a1a2e;
+      border: 1px solid #3a3a6a;
+      border-radius: 8px;
+      color: #e8e8f0;
+      font-size: 14px;
+      margin-bottom: 10px;
+      outline: none;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+    .submit-form input:focus, .submit-form textarea:focus { border-color: #6666dd; }
+    .submit-form textarea { resize: vertical; min-height: 80px; }
+
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #4444cc, #6644ee);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-submit:hover { opacity: 0.9; }
+    .btn-submit:disabled { opacity: 0.5; cursor: default; }
+
+    .submitted-msg {
+      background: #0a2a1a;
+      border: 1px solid #22cc7744;
+      border-radius: 12px;
+      padding: 20px;
+      color: #44ff99;
+      font-size: 15px;
+      display: none;
+    }
+    .submitted-msg.show { display: block; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- INTRO -->
+  <div id="intro">
+    <div class="badge">AI STUDY GROUP</div>
+    <h1>사전 퀴즈</h1>
+    <p>AI 도구에 대한 기본 지식을 확인하는 짧은 퀴즈입니다.<br>결과는 스터디 레벨 배정에 활용됩니다.</p>
+
+    <div class="rules">
+      <li>총 20문제 중 랜덤 10문제 출제</li>
+      <li>문제당 제한시간 <strong style="color:#8888ff">5초</strong></li>
+      <li>시간 초과 시 자동으로 다음 문제로 넘어갑니다</li>
+      <li>정답/오답 상관없이 스터디 참여 가능합니다</li>
+    </div>
+
+    <div class="name-form">
+      <input type="text" id="inputName" placeholder="이름" />
+      <input type="text" id="inputTeam" placeholder="소속 팀/부서" />
+      <select id="inputJob">
+        <option value="">직무 선택</option>
+        <option>Medical Affairs</option>
+        <option>급여/Reimbursement</option>
+        <option>마케팅</option>
+        <option>전략/기타</option>
+      </select>
+    </div>
+
+    <button class="btn-start" onclick="startQuiz()">퀴즈 시작하기 →</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz">
+    <div class="quiz-header">
+      <span class="progress-text" id="progressText">1 / 10</span>
+      <div class="timer-wrap">
+        <span style="font-size:13px;color:#5555aa">⏱</span>
+        <span class="timer-number" id="timerNum">5</span>
+      </div>
+    </div>
+
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressBar" style="width:10%"></div>
+    </div>
+
+    <div class="question-box">
+      <div class="question-num" id="questionNum">Q1</div>
+      <div class="question-text" id="questionText"></div>
+    </div>
+
+    <div class="options" id="optionsContainer"></div>
+    <div class="timeout-msg" id="timeoutMsg">⏰ 시간 초과!</div>
+    <div class="feedback" id="feedback"></div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">다음 →</button>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result">
+    <div class="badge">결과</div>
+    <div class="result-score" id="scoreDisplay"></div>
+    <div class="result-label" id="scoreLabel"></div>
+    <div class="result-sub" id="scoreSub"></div>
+
+    <div class="result-breakdown">
+      <h3>문항별 결과</h3>
+      <div id="breakdownList"></div>
+    </div>
+
+    <div class="submit-form">
+      <p style="font-size:13px;color:#7070a0;margin-bottom:12px;text-align:left">결과를 제출하면 리드(김경문)에게 전달됩니다.</p>
+      <textarea id="inputComment" placeholder="한마디 (스터디에서 꼭 배우고 싶은 것, 질문 등 — 선택사항)"></textarea>
+      <button class="btn-submit" id="submitBtn" onclick="submitResult()">결과 제출하기</button>
+    </div>
+    <div class="submitted-msg" id="submittedMsg">
+      ✅ 제출 완료! 김경문(kyungmoon.kim@boehringer-ingelheim.com)에게 결과가 전달됩니다.<br><br>
+      킥오프: <strong>2026년 4월 29일 (수)</strong> 점심 + 오후 2~3시<br>
+      Teams 채널 안내는 추후 별도 공지 예정입니다.
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── 데이터 로드 ──────────────────────────────────────────
+  let allQuestions = [];
+  let selected = [];
+  let current = 0;
+  let score = 0;
+  let history = [];
+  let timerInterval = null;
+  let timeLeft = 5;
+  let answered = false;
+  let userName = '';
+
+  async function loadQuestions() {
+    const res = await fetch('questions.json');
+    allQuestions = await res.json();
+  }
+  loadQuestions();
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  // ── 시작 ────────────────────────────────────────────────
+  function startQuiz() {
+    const name = document.getElementById('inputName').value.trim();
+    const team = document.getElementById('inputTeam').value.trim();
+    const job  = document.getElementById('inputJob').value;
+    if (!name || !team || !job) {
+      alert('이름, 소속, 직무를 모두 입력해주세요.');
+      return;
+    }
+    userName = name;
+    selected = shuffle(allQuestions).slice(0, 10);
+    current = 0; score = 0; history = [];
+    document.getElementById('intro').style.display = 'none';
+    document.getElementById('quiz').style.display = 'block';
+    showQuestion();
+  }
+
+  // ── 문제 표시 ────────────────────────────────────────────
+  function showQuestion() {
+    answered = false;
+    clearInterval(timerInterval);
+    timeLeft = 5;
+
+    const q = selected[current];
+    const idx = current + 1;
+
+    document.getElementById('progressText').textContent = `${idx} / 10`;
+    document.getElementById('progressBar').style.width = `${idx * 10}%`;
+    document.getElementById('questionNum').textContent = `Q${idx}`;
+    document.getElementById('questionText').textContent = q.question;
+    document.getElementById('timeoutMsg').classList.remove('show');
+    document.getElementById('feedback').classList.remove('show', 'correct-fb', 'wrong-fb');
+    document.getElementById('nextBtn').classList.remove('show');
+    updateTimer(5);
+
+    const container = document.getElementById('optionsContainer');
+    container.innerHTML = '';
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.textContent = opt;
+      btn.onclick = () => selectAnswer(i);
+      container.appendChild(btn);
+    });
+
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      updateTimer(timeLeft);
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        handleTimeout();
+      }
+    }, 1000);
+  }
+
+  function updateTimer(n) {
+    const el = document.getElementById('timerNum');
+    el.textContent = n;
+    el.classList.toggle('urgent', n <= 2);
+  }
+
+  // ── 답 선택 ──────────────────────────────────────────────
+  function selectAnswer(chosenIdx) {
+    if (answered) return;
+    answered = true;
+    clearInterval(timerInterval);
+
+    const q = selected[current];
+    const btns = document.querySelectorAll('.option-btn');
+    const correct = q.answer;
+    const isCorrect = chosenIdx === correct;
+
+    btns.forEach((b, i) => {
+      b.disabled = true;
+      if (i === correct) b.classList.add(chosenIdx === i ? 'correct' : 'reveal');
+      if (i === chosenIdx && !isCorrect) b.classList.add('wrong');
+    });
+
+    if (isCorrect) score++;
+    history.push({ question: q.question, correct: isCorrect, timedOut: false });
+
+    const fb = document.getElementById('feedback');
+    fb.textContent = (isCorrect ? '✓ 정답! ' : '✗ 오답. ') + q.explanation;
+    fb.className = `feedback show ${isCorrect ? 'correct-fb' : 'wrong-fb'}`;
+    document.getElementById('nextBtn').classList.add('show');
+  }
+
+  function handleTimeout() {
+    if (answered) return;
+    answered = true;
+
+    const q = selected[current];
+    const btns = document.querySelectorAll('.option-btn');
+    btns.forEach((b, i) => {
+      b.disabled = true;
+      if (i === q.answer) b.classList.add('reveal');
+    });
+    history.push({ question: q.question, correct: false, timedOut: true });
+
+    document.getElementById('timeoutMsg').classList.add('show');
+    const fb = document.getElementById('feedback');
+    fb.textContent = '⏱ 시간 초과. 정답: ' + q.options[q.answer] + ' — ' + q.explanation;
+    fb.className = 'feedback show wrong-fb';
+    document.getElementById('nextBtn').classList.add('show');
+  }
+
+  // ── 다음 문제 ────────────────────────────────────────────
+  function nextQuestion() {
+    current++;
+    if (current >= 10) {
+      showResult();
+    } else {
+      showQuestion();
+    }
+  }
+
+  // ── 결과 ────────────────────────────────────────────────
+  function showResult() {
+    document.getElementById('quiz').style.display = 'none';
+    document.getElementById('result').style.display = 'block';
+
+    const pct = Math.round(score / 10 * 100);
+    document.getElementById('scoreDisplay').textContent = `${score}/10`;
+
+    let label, sub;
+    if (score >= 8)      { label = '🔥 AI 지식 탁월!'; sub = 'L2~L3 트랙 추천드립니다.'; }
+    else if (score >= 5) { label = '👍 기본기 양호'; sub = 'L1~L2 트랙으로 시작하면 좋습니다.'; }
+    else                 { label = '✨ 이제 시작!'; sub = 'L1 트랙에서 기초부터 함께 쌓아요.'; }
+
+    document.getElementById('scoreLabel').textContent = label;
+    document.getElementById('scoreSub').textContent = sub;
+
+    const list = document.getElementById('breakdownList');
+    list.innerHTML = history.map((h, i) => `
+      <div class="result-row">
+        <span class="q-text">Q${i+1}. ${h.question.slice(0, 40)}${h.question.length > 40 ? '…' : ''}</span>
+        <span class="q-status ${h.correct ? 'ok' : 'fail'}">${h.timedOut ? '⏰ 시간초과' : h.correct ? '✓ 정답' : '✗ 오답'}</span>
+      </div>
+    `).join('');
+  }
+
+  // ── 제출 ────────────────────────────────────────────────
+  function submitResult() {
+    const comment = document.getElementById('inputComment').value;
+    const name    = document.getElementById('inputName').value;
+    const team    = document.getElementById('inputTeam').value;
+    const job     = document.getElementById('inputJob').value;
+
+    // mailto fallback (GitHub Pages 환경 — 백엔드 없음)
+    const subject = encodeURIComponent(`[AI Study Group 사전퀴즈] ${name} — ${score}/10`);
+    const body = encodeURIComponent(
+      `이름: ${name}\n팀: ${team}\n직무: ${job}\n점수: ${score}/10\n\n코멘트:\n${comment || '없음'}\n\n--- 문항별 결과 ---\n` +
+      history.map((h, i) => `Q${i+1}: ${h.correct ? '정답' : h.timedOut ? '시간초과' : '오답'} — ${h.question}`).join('\n')
+    );
+    window.location.href = `mailto:kyungmoon.kim@boehringer-ingelheim.com?subject=${subject}&body=${body}`;
+
+    document.getElementById('submitBtn').disabled = true;
+    document.getElementById('submittedMsg').classList.add('show');
+  }
+</script>
+</body>
+</html>
