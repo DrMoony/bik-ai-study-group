@@ -19,7 +19,7 @@
     "options": [
       "Claude Opus → Claude Code",
       "Gemini → Gemini CLI",
-      "GPT-4o → Copilot",
+      "GPT-4o → Codex CLI",
       "Llama 3 → Gemini Code Assist"
     ],
     "answer": 3,
