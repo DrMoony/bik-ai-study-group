@@ -181,6 +181,12 @@
 
 </div>
 <script>
+// ?reset 으로 접속하면 localStorage 초기화
+if (location.search.includes('reset')) {
+  Object.keys(localStorage).filter(k => k.startsWith('bik_')).forEach(k => localStorage.removeItem(k));
+  location.href = location.pathname;
+}
+
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxTLzJYUzYagZcAsCv7mZcMpaqyK7UPEwHKjOYNvuX1LSHJWlxvIW3iLPFHE5e_-L1zcA/exec';
 const TIMER_SECONDS = 7;
 
