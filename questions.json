@@ -1,15 +1,15 @@
 [
   {
     "id": 1,
-    "question": "텍스트, 이미지, 음성을 모두 처리할 수 있는 AI 기능을 뭐라고 하나요?",
+    "question": "텍스트, 이미지, 음성을 모두 처리할 수 있는 AI 기능은?",
     "options": ["멀티모달", "파인튜닝", "임베딩", "양자화"],
     "answer": 0,
-    "explanation": "멀티모달은 텍스트·이미지·음성 등 여러 형태의 데이터를 동시에 처리하는 AI 기능입니다."
+    "explanation": "멀티모달은 텍스트·이미지·음성 등 여러 형태의 데이터를 동시에 처리하는 기능입니다."
   },
   {
     "id": 2,
     "question": "ChatGPT, Claude, Gemini의 공통점은?",
-    "options": ["모두 Google이 만들었다", "모두 오픈소스다", "모두 대화형 AI 서비스다", "모두 이미지 전용이다"],
+    "options": ["모두 Google이 개발했다", "모두 무료 오픈소스다", "모두 대화형 AI 서비스다", "모두 이미지만 생성한다"],
     "answer": 2,
     "explanation": "ChatGPT(OpenAI), Claude(Anthropic), Gemini(Google)는 모두 대화형 AI 서비스입니다."
   },
@@ -22,17 +22,17 @@
   },
   {
     "id": 4,
-    "question": "AI가 사실이 아닌 내용을 마치 사실처럼 말하는 현상은?",
+    "question": "AI가 그럴듯하지만 사실이 아닌 내용을 만들어내는 현상은?",
     "options": ["오버피팅", "백프로파게이션", "할루시네이션", "디코딩"],
     "answer": 2,
-    "explanation": "할루시네이션(Hallucination)은 AI가 그럴듯하지만 사실이 아닌 내용을 생성하는 현상입니다."
+    "explanation": "할루시네이션은 AI가 확신 있게 틀린 정보를 생성하는 현상입니다."
   },
   {
     "id": 5,
-    "question": "다음 중 AI가 현재 가장 잘하는 것은?",
-    "options": ["감정적 공감", "대량의 텍스트 요약 및 분석", "윤리적 판단", "물리적 작업"],
-    "answer": 1,
-    "explanation": "현재 AI는 대량의 텍스트를 빠르게 요약·분석·비교하는 데 강점이 있습니다."
+    "question": "다음 중 현재 AI가 가장 잘 못하는 것은?",
+    "options": ["대량 문서 요약", "다국어 번역", "윤리적 가치 판단", "텍스트 패턴 분석"],
+    "answer": 2,
+    "explanation": "AI는 텍스트 처리에 강하지만, 윤리·감정·가치 판단은 여전히 사람의 영역입니다."
   },
   {
     "id": 6,
@@ -43,170 +43,170 @@
   },
   {
     "id": 7,
-    "question": "인터넷 없이 내 PC에서 AI를 실행할 수 있는 도구는?",
-    "options": ["ChatGPT", "Google Bard", "Copilot", "Ollama"],
+    "question": "인터넷 없이 내 PC에서 AI를 돌릴 수 있는 도구는?",
+    "options": ["ChatGPT 웹", "Google Gemini 앱", "Microsoft Copilot", "Ollama"],
     "answer": 3,
-    "explanation": "Ollama는 인터넷 없이 내 PC에서 오픈소스 AI 모델을 직접 실행하는 도구입니다."
+    "explanation": "Ollama는 오픈소스 모델을 내 PC에서 직접 실행하는 도구입니다."
   },
   {
     "id": 8,
-    "question": "LLM이 뜻하는 것은?",
-    "options": ["대규모 언어 모듈", "로컬 학습 기계", "대규모 언어 모델", "계층형 논리 모델"],
-    "answer": 2,
-    "explanation": "LLM = Large Language Model(대규모 언어 모델). GPT, Claude, Gemini 등이 모두 LLM입니다."
+    "question": "GPT, Claude, Gemini를 통칭하는 기술 용어는?",
+    "options": ["AGI", "LLM", "CNN", "RPA"],
+    "answer": 1,
+    "explanation": "LLM(Large Language Model)은 대규모 언어 모델의 약자로, 이 모델들의 공통 분류입니다."
   },
   {
     "id": 9,
-    "question": "AI에게 문서를 주고 '이 내용 바탕으로 답해줘'라고 하는 기법은?",
-    "options": ["파인튜닝", "검색 증강 생성 (RAG)", "양자화", "토크나이징"],
+    "question": "외부 문서를 참조해서 AI 답변의 정확도를 높이는 기법은?",
+    "options": ["파인튜닝", "검색 증강 생성", "양자화", "토크나이징"],
     "answer": 1,
-    "explanation": "RAG는 외부 문서를 검색해 AI 답변에 반영하는 기법입니다."
+    "explanation": "RAG(검색 증강 생성)는 외부 문서를 검색해 AI 답변에 반영하는 기법입니다."
   },
   {
     "id": 10,
-    "question": "AI한테 역할을 정해주면(예: '넌 전문가야') 뭐가 좋아지나요?",
-    "options": ["답변의 전문성과 맥락이 좋아진다", "AI 속도가 빨라진다", "비용이 줄어든다", "보안이 강화된다"],
-    "answer": 0,
-    "explanation": "역할을 지정하면 AI가 해당 분야의 맥락과 용어를 사용해 더 전문적인 답변을 생성합니다."
+    "question": "'넌 제약업계 MA 전문가야'라고 AI에게 역할을 부여하는 이유는?",
+    "options": ["API 비용이 줄어든다", "응답 속도가 빨라진다", "보안 수준이 올라간다", "도메인 맥락이 반영된다"],
+    "answer": 3,
+    "explanation": "역할을 지정하면 AI가 해당 분야의 맥락과 전문 용어를 사용해 답변합니다."
   },
   {
     "id": 11,
     "question": "다음 중 오픈소스 AI 모델과 출시 국가가 틀린 것은?",
     "options": ["Llama — 미국(Meta)", "Qwen — 중국(알리바바)", "DeepSeek — 중국", "Gemma — 한국(삼성)"],
     "answer": 3,
-    "explanation": "Gemma는 미국 Google DeepMind가 만든 모델입니다. 삼성이 아닙니다."
+    "explanation": "Gemma는 미국 Google DeepMind가 만든 모델입니다."
   },
   {
     "id": 12,
-    "question": "2025~26년 AI 업계의 가장 큰 트렌드는?",
-    "options": ["AI 개발 중단 선언", "AI 에이전트 (자율적으로 작업 수행하는 AI)", "AI 이미지 생성 금지법", "AI 모델 크기 축소"],
+    "question": "2025~26년 AI 업계 최대 키워드는?",
+    "options": ["AI 윈터(침체기)", "AI 에이전트", "AI 이미지 규제법", "AI 모델 소형화"],
     "answer": 1,
-    "explanation": "2025~26년 최대 트렌드는 AI 에이전트입니다. 자율적으로 도구를 활용해 복잡한 작업을 수행합니다."
+    "explanation": "AI 에이전트는 도구를 활용해 복잡한 업무를 처리하는 AI로, 최대 트렌드입니다."
   },
   {
     "id": 13,
-    "question": "AI가 처리하는 텍스트의 기본 단위를 뭐라고 하나요?",
+    "question": "AI가 텍스트를 처리하는 기본 단위는?",
     "options": ["픽셀", "토큰", "바이트", "프레임"],
     "answer": 1,
-    "explanation": "토큰은 AI가 텍스트를 처리하는 기본 단위입니다. API 비용도 토큰 수 기준으로 과금됩니다."
+    "explanation": "토큰은 AI가 텍스트를 처리하는 기본 단위이며, API 비용 산정 기준이기도 합니다."
   },
   {
     "id": 14,
-    "question": "기존 AI를 특정 분야 데이터로 추가 학습시키는 것은?",
+    "question": "기존 AI를 의료 데이터로 추가 학습시키는 것은?",
     "options": ["프롬프팅", "크롤링", "디플로이", "파인튜닝"],
     "answer": 3,
-    "explanation": "파인튜닝은 기존 AI를 특정 도메인 데이터로 추가 학습시켜 전문성을 높이는 방법입니다."
+    "explanation": "파인튜닝은 기존 모델을 특정 도메인 데이터로 재학습시키는 방법입니다."
   },
   {
     "id": 15,
-    "question": "ClinicalTrials.gov는 어떤 정보를 제공하나요?",
-    "options": ["주식 시장", "의약품 가격", "전 세계 임상시험 정보", "병원 평가"],
+    "question": "ClinicalTrials.gov를 운영하는 기관은?",
+    "options": ["WHO", "FDA", "NIH", "EMA"],
     "answer": 2,
-    "explanation": "ClinicalTrials.gov는 미국 NIH가 운영하는 임상시험 공개 데이터베이스입니다."
+    "explanation": "ClinicalTrials.gov는 미국 NIH(국립보건원)가 운영하는 임상시험 공개 DB입니다."
   },
   {
     "id": 16,
-    "question": "AI 에이전트(Agent)란?",
-    "options": ["AI 고객센터 직원", "단순 번역 도구", "데이터 저장소", "스스로 계획하고 도구를 써서 작업을 완수하는 AI"],
-    "answer": 3,
-    "explanation": "AI 에이전트는 목표가 주어지면 스스로 계획을 세우고 도구를 활용해 작업을 수행합니다."
+    "question": "AI 에이전트의 핵심 특징은?",
+    "options": ["사람보다 빠르게 타이핑한다", "외부 도구를 조합해 업무를 처리한다", "항상 100% 정확한 답을 낸다", "인터넷 없이만 작동한다"],
+    "answer": 1,
+    "explanation": "AI 에이전트는 웹 검색·파일 수정·코드 실행 등 도구를 조합해 업무를 수행합니다."
   },
   {
     "id": 17,
-    "question": "사내 업무에 AI를 활용할 때 가장 중요한 주의사항은?",
-    "options": ["최신 모델만 사용하기", "사내 기밀 데이터를 외부 AI에 입력하지 않기", "항상 영어로 질문하기", "유료 모델만 사용하기"],
+    "question": "사내 AI 활용 시 절대 하면 안 되는 것은?",
+    "options": ["공개 논문을 요약하는 것", "외부 AI에 사내 기밀을 입력하는 것", "AI 답변을 사람이 검증하는 것", "여러 AI 서비스를 비교하는 것"],
     "answer": 1,
-    "explanation": "사내 기밀·환자 데이터를 외부 AI에 입력하면 보안 문제가 생깁니다. 승인된 도구만 사용해야 합니다."
+    "explanation": "사내 기밀·환자 데이터를 외부 AI에 입력하면 보안 사고 위험이 있습니다."
   },
   {
     "id": 18,
-    "question": "Medical Affairs 실무에서 AI를 바로 적용할 수 있는 것은?",
-    "options": ["공개 논문 요약·비교 분석", "사내 환자 데이터 업로드", "경쟁사 영업 데이터 수집", "허가 안 된 임상 결과 생성"],
-    "answer": 0,
-    "explanation": "공개 논문, ClinicalTrials.gov 등 외부 공개 리소스 기반 요약·분석은 즉시 활용 가능합니다."
+    "question": "다음 중 MA 실무에서 AI를 즉시 적용하기 어려운 것은?",
+    "options": ["공개 논문 비교 분석", "학회 발표 자료 요약", "사내 환자 DB 직접 연동", "ClinicalTrials.gov 검색"],
+    "answer": 2,
+    "explanation": "사내 환자 데이터는 보안·규제 이슈로 외부 AI에 바로 연동하기 어렵습니다."
   },
   {
     "id": 19,
-    "question": "GitHub는 주로 어떤 용도로 사용하나요?",
-    "options": ["이미지 편집", "채팅", "코드 저장 및 협업", "동영상 스트리밍"],
+    "question": "GitHub의 주요 용도는?",
+    "options": ["이미지 편집", "메신저 채팅", "코드 저장 및 협업", "동영상 스트리밍"],
     "answer": 2,
-    "explanation": "GitHub는 코드를 저장하고 다른 사람과 협업할 수 있는 플랫폼입니다."
+    "explanation": "GitHub는 코드를 저장하고 협업할 수 있는 플랫폼입니다."
   },
   {
     "id": 20,
-    "question": "다음 중 Google이 만든 AI 모델은?",
-    "options": ["Claude", "Phi-3", "GPT-4", "Gemini"],
-    "answer": 3,
-    "explanation": "Gemini는 Google이 만든 AI 모델입니다. Claude=Anthropic, GPT=OpenAI, Phi=Microsoft."
+    "question": "다음 중 Anthropic이 만든 AI 모델은?",
+    "options": ["Gemini", "GPT-4o", "Claude", "Llama"],
+    "answer": 2,
+    "explanation": "Claude는 Anthropic이 만든 AI 모델입니다. Gemini=Google, GPT=OpenAI, Llama=Meta."
   },
   {
     "id": 21,
     "question": "Claude Code, Gemini CLI, Codex CLI의 공통점은?",
-    "options": ["모두 웹 브라우저에서 실행한다", "모두 터미널(명령줄)에서 실행하는 AI 도구다", "모두 무료다", "모두 같은 회사 제품이다"],
+    "options": ["웹 브라우저에서 실행한다", "터미널에서 실행하는 AI 도구다", "모두 동일한 모델을 쓴다", "모두 Google이 만들었다"],
     "answer": 1,
-    "explanation": "Claude Code(Anthropic), Gemini CLI(Google), Codex CLI(OpenAI)는 모두 터미널에서 실행하는 CLI 기반 AI 도구입니다."
+    "explanation": "이 도구들은 모두 터미널(명령줄)에서 실행하는 CLI 기반 AI 도구입니다."
   },
   {
     "id": 22,
-    "question": "DeepSeek가 2025년 초 화제가 된 이유는?",
-    "options": ["세계 최초의 AI 모델이라서", "저비용으로 GPT-4급 성능을 달성해서", "한국 기업이 만들어서", "이미지 생성에 특화돼서"],
+    "question": "DeepSeek가 2025년 초 주목받은 핵심 이유는?",
+    "options": ["세계 최초 AI 모델 출시", "적은 비용으로 최상위급 성능 달성", "한국 스타트업이 개발", "이미지 생성 분야 1위 달성"],
     "answer": 1,
-    "explanation": "중국 DeepSeek는 적은 비용으로 GPT-4급 성능을 달성해 AI 업계에 큰 충격을 줬습니다."
+    "explanation": "중국 DeepSeek는 저비용으로 GPT-4급 성능을 달성해 업계에 충격을 줬습니다."
   },
   {
     "id": 23,
-    "question": "AI에게 예시를 몇 개 보여주고 그 패턴대로 하라고 하는 기법은?",
-    "options": ["제로샷", "퓨샷 (Few-shot)", "원샷 배치", "멀티태스킹"],
+    "question": "AI에게 예시 2~3개를 보여주고 같은 패턴으로 처리하라는 기법은?",
+    "options": ["제로샷", "퓨샷", "원샷 배치", "멀티태스킹"],
     "answer": 1,
-    "explanation": "퓨샷(Few-shot)은 AI에게 몇 개의 예시를 주면 패턴을 파악해 같은 방식으로 답하는 기법입니다."
+    "explanation": "퓨샷은 소수의 예시를 주면 AI가 패턴을 파악해 같은 방식으로 답하는 기법입니다."
   },
   {
     "id": 24,
     "question": "다음 중 AI 이미지 생성 도구는?",
     "options": ["Midjourney", "Ollama", "LangChain", "Pandas"],
     "answer": 0,
-    "explanation": "Midjourney는 텍스트 프롬프트로 고품질 이미지를 생성하는 AI 도구입니다."
+    "explanation": "Midjourney는 텍스트로 고품질 이미지를 생성하는 도구입니다."
   },
   {
     "id": 25,
-    "question": "AI가 답변할 때 참고하는 맥락의 크기를 뭐라고 하나요?",
+    "question": "'AI가 한 번에 참고할 수 있는 텍스트 길이의 한계'를 뭐라고 하나요?",
     "options": ["해상도", "배치 사이즈", "컨텍스트 윈도우", "에포크"],
     "answer": 2,
-    "explanation": "컨텍스트 윈도우는 AI가 한 번에 읽고 처리할 수 있는 텍스트의 최대 길이입니다."
+    "explanation": "컨텍스트 윈도우는 AI가 한 대화에서 처리할 수 있는 최대 텍스트 길이입니다."
   },
   {
     "id": 26,
-    "question": "다음 중 AI로 코딩을 도와주는 도구가 아닌 것은?",
+    "question": "다음 중 AI 코딩 지원 도구가 아닌 것은?",
     "options": ["GitHub Copilot", "Cursor", "Tableau", "Claude Code"],
     "answer": 2,
-    "explanation": "Tableau는 데이터 시각화 도구입니다. 나머지는 모두 AI 코딩 지원 도구입니다."
+    "explanation": "Tableau는 데이터 시각화 도구이지 AI 코딩 도구가 아닙니다."
   },
   {
     "id": 27,
-    "question": "MCP(Model Context Protocol)란?",
-    "options": ["AI 모델 압축 기술", "AI가 외부 도구/데이터와 연결되는 표준 규격", "AI 학습 알고리즘", "AI 보안 인증 프로토콜"],
+    "question": "'AI가 외부 서비스(Drive, Slack 등)와 데이터를 주고받는 연결 표준'은?",
+    "options": ["API 게이트웨이", "MCP", "웹훅", "OAuth"],
     "answer": 1,
-    "explanation": "MCP는 AI가 Google Drive, Slack 등 외부 서비스와 데이터를 주고받을 수 있게 하는 연결 표준입니다."
+    "explanation": "MCP(Model Context Protocol)는 AI와 외부 도구를 표준화된 방식으로 연결하는 규격입니다."
   },
   {
     "id": 28,
-    "question": "Vibe Coding(바이브 코딩)이란?",
-    "options": ["음악 들으며 코딩하기", "AI에게 원하는 걸 말하면 AI가 코드를 짜주는 방식", "감정 기반 AI 모델", "VR 환경에서 코딩하기"],
+    "question": "'AI에게 말로 설명하면 AI가 코드를 짜주는 개발 방식'은?",
+    "options": ["노코드 플랫폼", "바이브 코딩", "페어 프로그래밍", "테스트 주도 개발"],
     "answer": 1,
-    "explanation": "바이브 코딩은 개발자가 직접 코드를 짜지 않고, AI에게 자연어로 설명하면 AI가 코드를 생성하는 새로운 개발 방식입니다."
+    "explanation": "바이브 코딩은 자연어로 AI에게 설명하면 AI가 코드를 생성하는 트렌드입니다."
   },
   {
     "id": 29,
-    "question": "AI 모델의 크기를 줄여 일반 PC에서도 실행 가능하게 하는 기법은?",
+    "question": "AI 모델을 압축해서 일반 PC에서도 돌릴 수 있게 하는 기법은?",
     "options": ["파인튜닝", "프롬프팅", "양자화", "토크나이징"],
     "answer": 2,
-    "explanation": "양자화(Quantization)는 모델의 정밀도를 줄여 크기를 작게 만들어, 일반 PC에서도 실행할 수 있게 합니다."
+    "explanation": "양자화는 모델 정밀도를 줄여 크기를 작게 만드는 기법입니다."
   },
   {
     "id": 30,
-    "question": "다음 중 AI 활용에 대한 올바른 자세는?",
-    "options": ["AI 결과를 항상 100% 신뢰한다", "AI는 무조건 위험하니 쓰지 않는다", "AI 결과를 검토하고 판단은 사람이 한다", "AI가 모든 업무를 대신해준다"],
-    "answer": 2,
-    "explanation": "AI는 강력한 도구지만, 최종 판단과 검증은 항상 사람이 해야 합니다."
+    "question": "'소프트웨어 간에 데이터를 주고받는 표준 인터페이스'를 뭐라고 하나요?",
+    "options": ["API", "GPU", "SDK", "IDE"],
+    "answer": 0,
+    "explanation": "API(Application Programming Interface)는 소프트웨어가 서로 데이터를 주고받는 규격입니다."
   }
 ]
