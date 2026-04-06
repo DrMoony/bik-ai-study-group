@@ -211,8 +211,7 @@
 
 </div>
 <script>
-const REPO_TOKEN = ['github','_pat_11ATSFXLQ0DjYGMqwcfRVL_HR','wQwFEfITQbUP8Iug1rEUdSGx','EGxBnD631CCzfkH06HIG2A7YMK6Nc7G8m'].join('');
-const SUBMISSIONS_API = 'https://api.github.com/repos/DrMoony/bik-ai-study-group/contents/submissions.json';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwtdbSjfe1Kx1zCIGqj886DTHWcmQdobryiiypofmTkLy-SsdNwWRgojs761MNzLaqj3Q/exec';
 
 // ── 중복 제출 방지 (이메일 기반) ─────────────────────────
 function checkAlreadySubmitted(email) {
@@ -410,33 +409,20 @@ async function submitResult() {
   };
 
   try {
-    // 현재 파일 GET
-    const getRes = await fetch(SUBMISSIONS_API, {
-      headers: { Authorization: `token ${REPO_TOKEN}` }
+    // Apps Script로 POST (text/plain = CORS preflight 없음)
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(submission),
+      headers: { 'Content-Type': 'text/plain' }
     });
-    const fileData = await getRes.json();
-    const current_list = JSON.parse(atob(fileData.content.replace(/\n/g, '')));
+    const result = await res.json();
 
-    // 같은 이메일 중복 서버측 확인
-    if (current_list.some(s => s.email === submission.email)) {
+    if (result.status === 'duplicate') {
       saving.classList.remove('show');
       btn.disabled = false;
       alert('이미 동일한 이메일로 제출된 기록이 있습니다.');
       return;
     }
-
-    current_list.push(submission);
-
-    // PUT 업데이트
-    await fetch(SUBMISSIONS_API, {
-      method: 'PUT',
-      headers: { Authorization: `token ${REPO_TOKEN}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        message: `submission: ${submission.name} (${submission.email}) — ${submission.score}`,
-        content: btoa(unescape(encodeURIComponent(JSON.stringify(current_list, null, 2)))),
-        sha: fileData.sha
-      })
-    });
 
     // localStorage 마킹
     markSubmitted(userInfo.email, userInfo.name, score);
