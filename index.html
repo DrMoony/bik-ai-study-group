@@ -418,6 +418,26 @@
 </div>
 
 <script>
+  // ── 중복 제출 방지 ───────────────────────────────────────
+  (function checkAlreadySubmitted() {
+    const submitted = localStorage.getItem('bik_quiz_submitted');
+    if (submitted) {
+      const data = JSON.parse(submitted);
+      document.body.innerHTML = `
+        <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;">
+          <div style="max-width:480px;padding:32px;text-align:center;background:#1a1a2e;border:1px solid #2a2a4a;border-radius:16px;margin:24px">
+            <div style="font-size:48px;margin-bottom:16px">✅</div>
+            <h2 style="font-size:20px;margin-bottom:12px">이미 제출하셨습니다</h2>
+            <p style="color:#9090b0;font-size:14px;line-height:1.7">
+              ${data.name}님은 <strong style="color:#8888ff">${data.score}/10</strong>점으로 이미 퀴즈를 완료하셨어요.<br>
+              결과가 김경문에게 전달됐습니다.<br><br>
+              킥오프: <strong>2026년 4월 29일 (수)</strong>
+            </p>
+          </div>
+        </div>`;
+    }
+  })();
+
   // ── 데이터 로드 ──────────────────────────────────────────
   let allQuestions = [];
   let selected = [];
@@ -591,6 +611,9 @@
     const name    = document.getElementById('inputName').value;
     const team    = document.getElementById('inputTeam').value;
     const job     = document.getElementById('inputJob').value;
+
+    // localStorage에 저장 — 재응시 방지
+    localStorage.setItem('bik_quiz_submitted', JSON.stringify({ name, score, submittedAt: new Date().toISOString() }));
 
     // mailto fallback (GitHub Pages 환경 — 백엔드 없음)
     const subject = encodeURIComponent(`[AI Study Group 사전퀴즈] ${name} — ${score}/10`);
