@@ -3,61 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Study Group — 사전 퀴즈</title>
+  <title>AI Study Group — 사전 설문</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #0f0f1a; color: #e8e8f0;
-      min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f1a; color: #e8e8f0; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
     .container { width: 100%; max-width: 640px; padding: 24px; }
-
-    /* INTRO */
-    #intro { text-align: center; }
-    .badge {
-      display: inline-block; background: #1e1e3a; border: 1px solid #4a4a8a;
-      color: #8888ff; font-size: 12px; padding: 4px 12px; border-radius: 20px;
-      margin-bottom: 20px; letter-spacing: 1px;
-    }
-    h1 { font-size: 28px; font-weight: 700; margin-bottom: 12px; line-height: 1.3; }
-    #intro p { color: #9090b0; font-size: 15px; line-height: 1.7; margin-bottom: 32px; }
-    .rules {
-      background: #1a1a2e; border: 1px solid #2a2a4a; border-radius: 12px;
-      padding: 20px; text-align: left; margin-bottom: 32px;
-    }
+    .badge { display: inline-block; background: #1e1e3a; border: 1px solid #4a4a8a; color: #8888ff; font-size: 12px; padding: 4px 12px; border-radius: 20px; margin-bottom: 20px; letter-spacing: 1px; }
+    h1 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+    .sub { color: #9090b0; font-size: 15px; line-height: 1.7; margin-bottom: 32px; }
+    .rules { background: #1a1a2e; border: 1px solid #2a2a4a; border-radius: 12px; padding: 20px; text-align: left; margin-bottom: 32px; }
     .rules li { font-size: 14px; color: #b0b0cc; margin-bottom: 10px; padding-left: 8px; list-style: none; }
     .rules li::before { content: '▸ '; color: #6666dd; }
-
-    /* FORM */
     .form-group { margin-bottom: 10px; }
-    .form-group input, .form-group select {
-      width: 100%; padding: 12px 16px; background: #1a1a2e;
-      border: 1px solid #3a3a6a; border-radius: 8px; color: #e8e8f0;
-      font-size: 15px; outline: none; transition: border-color 0.2s;
-    }
+    .form-group input, .form-group select { width: 100%; padding: 12px 16px; background: #1a1a2e; border: 1px solid #3a3a6a; border-radius: 8px; color: #e8e8f0; font-size: 15px; outline: none; }
     .form-group input:focus, .form-group select:focus { border-color: #6666dd; }
     .form-group input.error { border-color: #ff4466; }
-    .form-group .hint { font-size: 12px; color: #6060a0; margin-top: 4px; padding-left: 4px; }
-    .form-group .hint.err { color: #ff4466; }
+    .hint { font-size: 12px; color: #6060a0; margin-top: 4px; padding-left: 4px; }
+    .hint.err { color: #ff4466; }
     select option { background: #1a1a2e; }
-
-    /* BUTTONS */
-    .btn-primary {
-      width: 100%; padding: 16px; background: linear-gradient(135deg, #4444cc, #6644ee);
-      color: white; border: none; border-radius: 12px; font-size: 17px;
-      font-weight: 600; cursor: pointer; transition: opacity 0.2s, transform 0.1s;
-      margin-top: 8px;
-    }
-    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
-    .btn-primary:active { transform: translateY(0); }
-    .btn-primary:disabled { opacity: 0.4; cursor: default; transform: none; }
+    textarea { width: 100%; padding: 12px 16px; background: #1a1a2e; border: 1px solid #3a3a6a; border-radius: 8px; color: #e8e8f0; font-size: 14px; margin-bottom: 10px; outline: none; font-family: inherit; resize: vertical; min-height: 80px; }
+    textarea:focus { border-color: #6666dd; }
+    .btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #4444cc, #6644ee); color: white; border: none; border-radius: 12px; font-size: 17px; font-weight: 600; cursor: pointer; margin-top: 8px; }
+    .btn:hover { opacity: 0.9; }
+    .btn:disabled { opacity: 0.4; cursor: default; }
 
     /* QUIZ */
-    #quiz { display: none; }
+    .section { display: none; }
+    .section.active { display: block; }
     .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     .progress-text { font-size: 13px; color: #7070a0; }
-    .timer-number { font-size: 28px; font-weight: 800; color: #6666dd; min-width: 40px; text-align: right; transition: color 0.3s; }
+    .timer-number { font-size: 28px; font-weight: 800; color: #6666dd; min-width: 40px; text-align: right; }
     .timer-number.urgent { color: #ff4466; }
     .progress-bar-bg { height: 4px; background: #2a2a4a; border-radius: 2px; margin-bottom: 28px; }
     .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #4444cc, #6644ee); border-radius: 2px; transition: width 0.3s; }
@@ -65,67 +40,49 @@
     .question-num { font-size: 12px; color: #6666aa; margin-bottom: 12px; letter-spacing: 1px; }
     .question-text { font-size: 18px; font-weight: 600; line-height: 1.5; }
     .options { display: flex; flex-direction: column; gap: 10px; }
-    .option-btn {
-      padding: 14px 18px; background: #1a1a2e; border: 1px solid #2a2a4a;
-      border-radius: 10px; color: #e8e8f0; font-size: 15px; text-align: left;
-      cursor: pointer; transition: background 0.15s, border-color 0.15s, transform 0.1s;
-    }
+    .option-btn { padding: 14px 18px; background: #1a1a2e; border: 1px solid #2a2a4a; border-radius: 10px; color: #e8e8f0; font-size: 15px; text-align: left; cursor: pointer; transition: all 0.15s; }
     .option-btn:hover:not(:disabled) { background: #252545; border-color: #5555aa; transform: translateX(4px); }
     .option-btn.correct { background: #0d3d2a; border-color: #22cc77; color: #44ff99; }
-    .option-btn.wrong   { background: #3d0d1a; border-color: #cc2244; color: #ff4466; }
-    .option-btn.reveal  { background: #1a2a1a; border-color: #22cc77; color: #44ff99; opacity: 0.6; }
+    .option-btn.wrong { background: #3d0d1a; border-color: #cc2244; color: #ff4466; }
+    .option-btn.reveal { background: #1a2a1a; border-color: #22cc77; color: #44ff99; opacity: 0.6; }
     .option-btn:disabled { cursor: default; }
     .feedback { margin-top: 14px; padding: 12px 16px; border-radius: 8px; font-size: 13px; line-height: 1.5; display: none; }
     .feedback.show { display: block; }
-    .feedback.correct-fb { background: #0a2a1a; color: #44ff99; border: 1px solid #22cc4422; }
-    .feedback.wrong-fb   { background: #2a0a14; color: #ff8899; border: 1px solid #cc224422; }
+    .feedback.correct-fb { background: #0a2a1a; color: #44ff99; }
+    .feedback.wrong-fb { background: #2a0a14; color: #ff8899; }
     .timeout-msg { text-align: center; padding: 20px; font-size: 15px; color: #ff6688; display: none; }
     .timeout-msg.show { display: block; }
-    .next-btn {
-      width: 100%; margin-top: 18px; padding: 14px; background: #252545;
-      border: 1px solid #3a3a6a; border-radius: 10px; color: #b0b0ee;
-      font-size: 15px; cursor: pointer; transition: background 0.15s; display: none;
-    }
+    .next-btn { width: 100%; margin-top: 18px; padding: 14px; background: #252545; border: 1px solid #3a3a6a; border-radius: 10px; color: #b0b0ee; font-size: 15px; cursor: pointer; display: none; }
     .next-btn.show { display: block; }
     .next-btn:hover { background: #30305a; }
 
     /* RESULT */
-    #result { display: none; text-align: center; }
-    .result-score {
-      font-size: 72px; font-weight: 800;
-      background: linear-gradient(135deg, #4444cc, #aa44ff);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      margin: 20px 0 8px;
-    }
+    .result-score { font-size: 72px; font-weight: 800; background: linear-gradient(135deg, #4444cc, #aa44ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 20px 0 8px; }
     .result-label { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
-    .result-sub   { color: #7070a0; font-size: 14px; margin-bottom: 32px; }
+    .result-sub { color: #7070a0; font-size: 14px; margin-bottom: 32px; }
     .result-breakdown { background: #1a1a2e; border: 1px solid #2a2a4a; border-radius: 12px; padding: 20px; margin-bottom: 28px; text-align: left; }
-    .result-breakdown h3 { font-size: 14px; color: #7070a0; margin-bottom: 14px; letter-spacing: 1px; }
+    .result-breakdown h3 { font-size: 14px; color: #7070a0; margin-bottom: 14px; }
     .result-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #1e1e38; }
-    .result-row:last-child { border-bottom: none; margin-bottom: 0; }
-    .result-row .q-text   { color: #b0b0cc; flex: 1; padding-right: 12px; }
+    .result-row:last-child { border-bottom: none; }
+    .result-row .q-text { color: #b0b0cc; flex: 1; padding-right: 12px; }
     .result-row .q-status { font-weight: 600; white-space: nowrap; }
-    .result-row .q-status.ok   { color: #44ff99; }
+    .result-row .q-status.ok { color: #44ff99; }
     .result-row .q-status.fail { color: #ff4466; }
-    .submit-form { margin-bottom: 20px; }
-    .submit-form textarea {
-      width: 100%; padding: 12px 16px; background: #1a1a2e; border: 1px solid #3a3a6a;
-      border-radius: 8px; color: #e8e8f0; font-size: 14px; margin-bottom: 10px;
-      outline: none; transition: border-color 0.2s; font-family: inherit;
-      resize: vertical; min-height: 80px;
-    }
-    .submit-form textarea:focus { border-color: #6666dd; }
-    .submitted-msg { background: #0a2a1a; border: 1px solid #22cc7744; border-radius: 12px; padding: 20px; color: #44ff99; font-size: 15px; display: none; }
-    .submitted-msg.show { display: block; }
     .saving-msg { color: #8888ff; font-size: 13px; margin-top: 8px; display: none; }
     .saving-msg.show { display: block; }
+    .submitted-msg { background: #0a2a1a; border: 1px solid #22cc7744; border-radius: 12px; padding: 20px; color: #44ff99; font-size: 15px; display: none; }
+    .submitted-msg.show { display: block; }
+
+    /* INTERVIEW */
+    .interview-label { font-size: 14px; color: #b0b0cc; font-weight: 600; margin-bottom: 4px; text-align: left; }
+    .interview-hint { font-size: 12px; color: #6060a0; margin-bottom: 8px; text-align: left; }
   </style>
 </head>
 <body>
 <div class="container">
 
   <!-- ALREADY SUBMITTED -->
-  <div id="alreadyDone" style="display:none;text-align:center">
+  <div id="alreadyDone" class="section" style="text-align:center">
     <div style="background:#1a1a2e;border:1px solid #2a2a4a;border-radius:16px;padding:40px;margin-top:40px">
       <div style="font-size:48px;margin-bottom:16px">✅</div>
       <h2 style="font-size:20px;margin-bottom:12px">이미 제출하셨습니다</h2>
@@ -133,27 +90,23 @@
     </div>
   </div>
 
-  <!-- INTRO -->
-  <div id="intro">
+  <!-- STEP 1: INTRO + 기본정보 -->
+  <div id="step1" class="section active" style="text-align:center">
     <div class="badge">AI STUDY GROUP</div>
-    <h1>사전 퀴즈</h1>
-    <p>AI 도구에 대한 기본 지식을 확인하는 짧은 퀴즈입니다.<br>결과는 스터디 레벨 배정에 활용됩니다.</p>
+    <h1>사전 설문 + 퀴즈</h1>
+    <p class="sub">사전 인터뷰 (3분) → 퀴즈 (10문제, 7초) → 결과 확인</p>
     <div class="rules">
-      <li>총 20문제 중 랜덤 <strong style="color:#8888ff">10문제</strong> 출제</li>
-      <li>문제당 제한시간 <strong style="color:#8888ff">5초</strong></li>
-      <li>시간 초과 시 자동으로 다음 문제로 넘어갑니다</li>
+      <li>인터뷰: 3개 질문에 자유롭게 답변 (필수)</li>
+      <li>퀴즈: 30문제 중 랜덤 <strong style="color:#8888ff">10문제</strong> 출제</li>
+      <li>문제당 제한시간 <strong style="color:#8888ff">7초</strong></li>
       <li>정답/오답 상관없이 스터디 참여 가능합니다</li>
     </div>
-    <div class="form-group">
-      <input type="text" id="inputName" placeholder="이름" />
-    </div>
+    <div class="form-group"><input type="text" id="inputName" placeholder="이름" /></div>
     <div class="form-group">
       <input type="email" id="inputEmail" placeholder="사내 이메일 (@boehringer-ingelheim.com)" />
       <div class="hint" id="emailHint">@boehringer-ingelheim.com 이메일만 참여 가능합니다</div>
     </div>
-    <div class="form-group">
-      <input type="text" id="inputTeam" placeholder="소속 팀/부서" />
-    </div>
+    <div class="form-group"><input type="text" id="inputTeam" placeholder="소속 팀/부서" /></div>
     <div class="form-group">
       <select id="inputJob">
         <option value="">직무 선택</option>
@@ -163,16 +116,37 @@
         <option>전략/기타</option>
       </select>
     </div>
-    <button class="btn-primary" onclick="startQuiz()">퀴즈 시작하기 →</button>
+    <button class="btn" onclick="goToInterview()">다음: 인터뷰 →</button>
   </div>
 
-  <!-- QUIZ -->
-  <div id="quiz">
+  <!-- STEP 2: INTERVIEW (필수, 퀴즈 전) -->
+  <div id="step2" class="section">
+    <div class="badge">STEP 2 / 3</div>
+    <h1>인터뷰</h1>
+    <p class="sub">아래 3개 질문에 자유롭게 답해주세요. 레벨 배정 참고용입니다.</p>
+
+    <div class="interview-label">1. AI 활용 경험</div>
+    <div class="interview-hint">업무에 AI 도구를 써본 적 있다면, 어떤 도구로 어떤 용도로 사용했나요?</div>
+    <textarea id="inputUsecase" placeholder="예: ChatGPT로 이메일 초안 작성, Claude로 논문 요약, Copilot으로 엑셀 정리 등"></textarea>
+
+    <div class="interview-label">2. 스터디 기대사항</div>
+    <div class="interview-hint">이 스터디에서 가장 배우고 싶거나 만들고 싶은 것은?</div>
+    <textarea id="inputWant" placeholder="예: 데이터 자동 정리, 나만의 AI 도구 만들기, 대시보드 제작 등"></textarea>
+
+    <div class="interview-label">3. AI vs LLM 용어 논쟁</div>
+    <div class="interview-hint">요즘 'AI' 대신 'LLM'이라고 정확히 부르자는 움직임이 있습니다. 이에 대한 본인의 생각은?</div>
+    <textarea id="inputComment" placeholder="자유 답변 (1~2문장이면 충분합니다)"></textarea>
+
+    <button class="btn" onclick="goToQuiz()">다음: 퀴즈 시작 →</button>
+  </div>
+
+  <!-- STEP 3: QUIZ -->
+  <div id="step3" class="section">
     <div class="quiz-header">
       <span class="progress-text" id="progressText">1 / 10</span>
       <div style="display:flex;align-items:center;gap:8px">
         <span style="font-size:13px;color:#5555aa">⏱</span>
-        <span class="timer-number" id="timerNum">5</span>
+        <span class="timer-number" id="timerNum">7</span>
       </div>
     </div>
     <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressBar" style="width:10%"></div></div>
@@ -186,27 +160,20 @@
     <button class="next-btn" id="nextBtn" onclick="nextQuestion()">다음 →</button>
   </div>
 
-  <!-- RESULT -->
-  <div id="result">
+  <!-- STEP 4: RESULT -->
+  <div id="step4" class="section" style="text-align:center">
     <div class="badge">결과</div>
     <div class="result-score" id="scoreDisplay"></div>
     <div class="result-label" id="scoreLabel"></div>
-    <div class="result-sub"   id="scoreSub"></div>
+    <div class="result-sub" id="scoreSub"></div>
     <div class="result-breakdown">
       <h3>문항별 결과</h3>
       <div id="breakdownList"></div>
     </div>
-    <div class="submit-form">
-      <p style="font-size:14px;color:#b0b0cc;margin-bottom:16px;text-align:left;font-weight:600">간단한 인터뷰</p>
-      <p style="font-size:12px;color:#7070a0;margin-bottom:10px;text-align:left">아래 질문에 자유롭게 답해주세요 (레벨 배정 참고용)</p>
-      <textarea id="inputUsecase" placeholder="1. AI 도구를 업무에 써본 적 있나요? 어떤 용도로? (예: ChatGPT로 이메일 초안, 논문 요약 등)"></textarea>
-      <textarea id="inputWant" placeholder="2. 이 스터디에서 가장 배우고 싶은 것은? (예: 데이터 자동 정리, 나만의 AI 도구 만들기 등)"></textarea>
-      <textarea id="inputComment" placeholder="3. 요즘 'AI' 대신 'LLM'이라고 부르자는 움직임이 있습니다. 이에 대한 본인의 생각은? (자유 답변)"></textarea>
-      <button class="btn-primary" id="submitBtn" onclick="submitResult()">결과 제출하기</button>
-      <div class="saving-msg" id="savingMsg">⏳ 저장 중...</div>
-    </div>
+    <button class="btn" id="submitBtn" onclick="submitResult()">결과 제출하기</button>
+    <div class="saving-msg" id="savingMsg">⏳ 저장 중...</div>
     <div class="submitted-msg" id="submittedMsg">
-      ✅ 제출 완료! 리드에게 결과가 전달됐습니다.<br><br>
+      ✅ 제출 완료!<br><br>
       킥오프: <strong>2026년 4월 29일 (수)</strong> 점심 + 오후 2~3시<br>
       Teams 채널 안내는 추후 별도 공지 예정입니다.
     </div>
@@ -215,86 +182,114 @@
 </div>
 <script>
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzDnEEOCX5IHrACAvYWGskf2Oyug-JhCWkm_DkdZYqaws70LUTh4tw2c68P5WVJRKbojg/exec';
+const TIMER_SECONDS = 7;
 
-// ── 중복 제출 방지 (이메일 기반) ─────────────────────────
 function checkAlreadySubmitted(email) {
-  const key = 'bik_submitted_' + btoa(email.toLowerCase());
-  return localStorage.getItem(key);
+  return localStorage.getItem('bik_submitted_' + btoa(email.toLowerCase()));
 }
 function markSubmitted(email, name, score) {
-  const key = 'bik_submitted_' + btoa(email.toLowerCase());
-  localStorage.setItem(key, JSON.stringify({ name, score, at: new Date().toISOString() }));
+  localStorage.setItem('bik_submitted_' + btoa(email.toLowerCase()), JSON.stringify({ name, score, at: new Date().toISOString() }));
 }
 
-// ── 상태 ───────────────────────────────────────────────
 let allQuestions = [], selected = [], current = 0, score = 0;
-let history = [], timerInterval = null, timeLeft = 5, answered = false;
+let history = [], timerInterval = null, timeLeft = TIMER_SECONDS, answered = false;
 let userInfo = {};
 
 async function loadQuestions() {
-  const res = await fetch('questions.json');
-  allQuestions = await res.json();
+  allQuestions = await (await fetch('questions.json')).json();
 }
 loadQuestions();
 
 function shuffle(arr) {
   const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
   return a;
 }
 
-// ── 시작 ──────────────────────────────────────────────
-function startQuiz() {
-  const name  = document.getElementById('inputName').value.trim();
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ── STEP 1 → STEP 2 ──
+function goToInterview() {
+  const name = document.getElementById('inputName').value.trim();
   const email = document.getElementById('inputEmail').value.trim().toLowerCase();
-  const team  = document.getElementById('inputTeam').value.trim();
-  const job   = document.getElementById('inputJob').value;
-
-  // 유효성 검사
-  if (!name || !email || !team || !job) {
-    alert('모든 항목을 입력해주세요.');
-    return;
-  }
+  const team = document.getElementById('inputTeam').value.trim();
+  const job = document.getElementById('inputJob').value;
+  if (!name || !email || !team || !job) { alert('모든 항목을 입력해주세요.'); return; }
   if (!email.endsWith('@boehringer-ingelheim.com')) {
-    const hint = document.getElementById('emailHint');
     document.getElementById('inputEmail').classList.add('error');
-    hint.textContent = '❌ @boehringer-ingelheim.com 이메일만 참여할 수 있습니다.';
-    hint.classList.add('err');
+    const h = document.getElementById('emailHint'); h.textContent = '❌ @boehringer-ingelheim.com 이메일만 참여 가능합니다.'; h.classList.add('err');
     return;
   }
-
-  // 중복 제출 확인
   const prev = checkAlreadySubmitted(email);
   if (prev) {
     const d = JSON.parse(prev);
-    document.getElementById('intro').style.display = 'none';
-    document.getElementById('alreadyDone').style.display = 'block';
-    document.getElementById('alreadyMsg').innerHTML =
-      `${d.name}님은 이미 <strong style="color:#8888ff">${d.score}/10</strong>점으로 제출하셨습니다.<br>
-       결과가 리드에게 전달됐습니다.<br><br>
-       킥오프: <strong>2026년 4월 29일 (수)</strong>`;
-    return;
+    document.getElementById('alreadyMsg').innerHTML = `${d.name}님은 이미 <strong style="color:#8888ff">${d.score}/10</strong>점으로 제출하셨습니다.<br>킥오프: <strong>2026년 4월 29일 (수)</strong>`;
+    showSection('alreadyDone'); return;
   }
-
   userInfo = { name, email, team, job };
-  selected = shuffle(allQuestions).slice(0, 10);
-  current = 0; score = 0; history = [];
-  document.getElementById('intro').style.display = 'none';
-  document.getElementById('quiz').style.display = 'block';
-  showQuestion();
+  showSection('step2');
 }
 
-// ── 문제 표시 ─────────────────────────────────────────
-function showQuestion() {
-  answered = false;
-  clearInterval(timerInterval);
-  timeLeft = 5;
+// ── 연습 문제 ──
+const PRACTICE = {
+  question: '한국 베링거인겔하임의 Obesity/MASH Medical Lead 이름은?',
+  options: ['이수진', '박민수', '김경문', '최영호'],
+  answer: 2,
+  explanation: '정답! 김경문입니다. 이 스터디의 리드이기도 합니다. 이제 본 퀴즈를 시작합니다!'
+};
+let isPractice = false;
 
-  const q = selected[current];
-  const idx = current + 1;
+// ── STEP 2 → STEP 3 (연습 문제 먼저) ──
+function goToQuiz() {
+  const uc = document.getElementById('inputUsecase').value.trim();
+  const wt = document.getElementById('inputWant').value.trim();
+  const cm = document.getElementById('inputComment').value.trim();
+  if (!uc || !wt || !cm) { alert('모든 인터뷰 질문에 답해주세요.'); return; }
+  userInfo.usecase = uc; userInfo.want = wt; userInfo.comment = cm;
+  selected = shuffle(allQuestions).slice(0, 10);
+  current = 0; score = 0; history = [];
+  showSection('step3');
+  showPractice();
+}
+function showPractice() {
+  isPractice = true;
+  document.getElementById('progressText').textContent = '연습';
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('questionNum').textContent = '연습 문제';
+  document.getElementById('questionText').textContent = PRACTICE.question;
+  document.getElementById('timeoutMsg').classList.remove('show');
+  document.getElementById('feedback').classList.remove('show', 'correct-fb', 'wrong-fb');
+  document.getElementById('nextBtn').classList.remove('show');
+  document.getElementById('timerNum').textContent = '∞';
+  document.getElementById('timerNum').classList.remove('urgent');
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  PRACTICE.options.forEach((opt, i) => {
+    const btn = document.createElement('button'); btn.className = 'option-btn'; btn.textContent = opt;
+    btn.onclick = () => {
+      document.querySelectorAll('.option-btn').forEach((b, j) => {
+        b.disabled = true;
+        if (j === PRACTICE.answer) b.classList.add(i === j ? 'correct' : 'reveal');
+        if (j === i && i !== PRACTICE.answer) b.classList.add('wrong');
+      });
+      const fb = document.getElementById('feedback');
+      fb.textContent = (i === PRACTICE.answer ? '✓ ' : '✗ ') + PRACTICE.explanation;
+      fb.className = `feedback show ${i === PRACTICE.answer ? 'correct-fb' : 'wrong-fb'}`;
+      document.getElementById('nextBtn').classList.add('show');
+      document.getElementById('nextBtn').textContent = '본 퀴즈 시작 →';
+    };
+    container.appendChild(btn);
+  });
+}
+
+// ── QUIZ ──
+function showQuestion() {
+  answered = false; clearInterval(timerInterval); timeLeft = TIMER_SECONDS;
+  const q = selected[current], idx = current + 1;
   document.getElementById('progressText').textContent = `${idx} / 10`;
   document.getElementById('progressBar').style.width = `${idx * 10}%`;
   document.getElementById('questionNum').textContent = `Q${idx}`;
@@ -302,60 +297,31 @@ function showQuestion() {
   document.getElementById('timeoutMsg').classList.remove('show');
   document.getElementById('feedback').classList.remove('show', 'correct-fb', 'wrong-fb');
   document.getElementById('nextBtn').classList.remove('show');
-  updateTimer(5);
-
+  updateTimer(TIMER_SECONDS);
   const container = document.getElementById('optionsContainer');
   container.innerHTML = '';
   q.options.forEach((opt, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'option-btn';
-    btn.textContent = opt;
-    btn.onclick = () => selectAnswer(i);
-    container.appendChild(btn);
+    const btn = document.createElement('button'); btn.className = 'option-btn'; btn.textContent = opt;
+    btn.onclick = () => selectAnswer(i); container.appendChild(btn);
   });
-
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    updateTimer(timeLeft);
-    if (timeLeft <= 0) { clearInterval(timerInterval); handleTimeout(); }
-  }, 1000);
+  timerInterval = setInterval(() => { timeLeft--; updateTimer(timeLeft); if (timeLeft <= 0) { clearInterval(timerInterval); handleTimeout(); } }, 1000);
 }
-
-function updateTimer(n) {
-  const el = document.getElementById('timerNum');
-  el.textContent = n;
-  el.classList.toggle('urgent', n <= 2);
-}
-
-function selectAnswer(chosenIdx) {
-  if (answered) return;
-  answered = true;
-  clearInterval(timerInterval);
-  const q = selected[current];
-  const btns = document.querySelectorAll('.option-btn');
-  const correct = q.answer;
-  const isCorrect = chosenIdx === correct;
-  btns.forEach((b, i) => {
-    b.disabled = true;
-    if (i === correct) b.classList.add(chosenIdx === i ? 'correct' : 'reveal');
-    if (i === chosenIdx && !isCorrect) b.classList.add('wrong');
-  });
-  if (isCorrect) score++;
-  history.push({ question: q.question, correct: isCorrect, timedOut: false });
+function updateTimer(n) { const el = document.getElementById('timerNum'); el.textContent = n; el.classList.toggle('urgent', n <= 2); }
+function selectAnswer(idx) {
+  if (answered) return; answered = true; clearInterval(timerInterval);
+  const q = selected[current], correct = q.answer, ok = idx === correct;
+  document.querySelectorAll('.option-btn').forEach((b, i) => { b.disabled = true; if (i === correct) b.classList.add(idx === i ? 'correct' : 'reveal'); if (i === idx && !ok) b.classList.add('wrong'); });
+  if (ok) score++;
+  history.push({ question: q.question, correct: ok, timedOut: false });
   const fb = document.getElementById('feedback');
-  fb.textContent = (isCorrect ? '✓ 정답! ' : '✗ 오답. ') + q.explanation;
-  fb.className = `feedback show ${isCorrect ? 'correct-fb' : 'wrong-fb'}`;
+  fb.textContent = (ok ? '✓ 정답! ' : '✗ 오답. ') + q.explanation;
+  fb.className = `feedback show ${ok ? 'correct-fb' : 'wrong-fb'}`;
   document.getElementById('nextBtn').classList.add('show');
 }
-
 function handleTimeout() {
-  if (answered) return;
-  answered = true;
+  if (answered) return; answered = true;
   const q = selected[current];
-  document.querySelectorAll('.option-btn').forEach((b, i) => {
-    b.disabled = true;
-    if (i === q.answer) b.classList.add('reveal');
-  });
+  document.querySelectorAll('.option-btn').forEach((b, i) => { b.disabled = true; if (i === q.answer) b.classList.add('reveal'); });
   history.push({ question: q.question, correct: false, timedOut: true });
   document.getElementById('timeoutMsg').classList.add('show');
   const fb = document.getElementById('feedback');
@@ -363,71 +329,47 @@ function handleTimeout() {
   fb.className = 'feedback show wrong-fb';
   document.getElementById('nextBtn').classList.add('show');
 }
-
 function nextQuestion() {
-  current++;
-  if (current >= 10) showResult();
-  else showQuestion();
+  if (isPractice) { isPractice = false; document.getElementById('nextBtn').textContent = '다음 →'; showQuestion(); return; }
+  current++; if (current >= 10) showResult(); else showQuestion();
 }
 
-// ── 결과 ──────────────────────────────────────────────
+// ── RESULT ──
 function showResult() {
-  document.getElementById('quiz').style.display = 'none';
-  document.getElementById('result').style.display = 'block';
+  showSection('step4');
   document.getElementById('scoreDisplay').textContent = `${score}/10`;
   let label, sub;
-  if (score >= 8)      { label = '🔥 AI 지식 탁월!';  sub = 'L2~L3 트랙 추천드립니다.'; }
-  else if (score >= 5) { label = '👍 기본기 양호';     sub = 'L1~L2 트랙으로 시작하면 좋습니다.'; }
-  else                 { label = '✨ 이제 시작!';      sub = 'L1 트랙에서 기초부터 함께 쌓아요.'; }
+  if (score >= 8) { label = '🔥 AI 지식 탁월!'; sub = 'L2~L3 트랙 추천'; }
+  else if (score >= 5) { label = '👍 기본기 양호'; sub = 'L1~L2 트랙 추천'; }
+  else { label = '✨ 이제 시작!'; sub = 'L1 트랙에서 기초부터'; }
   document.getElementById('scoreLabel').textContent = label;
   document.getElementById('scoreSub').textContent = sub;
-  document.getElementById('breakdownList').innerHTML = history.map((h, i) => `
-    <div class="result-row">
-      <span class="q-text">Q${i+1}. ${h.question.slice(0, 40)}${h.question.length > 40 ? '…' : ''}</span>
-      <span class="q-status ${h.correct ? 'ok' : 'fail'}">${h.timedOut ? '⏰ 시간초과' : h.correct ? '✓ 정답' : '✗ 오답'}</span>
-    </div>`).join('');
+  document.getElementById('breakdownList').innerHTML = history.map((h, i) =>
+    `<div class="result-row"><span class="q-text">Q${i+1}. ${h.question.slice(0,40)}${h.question.length>40?'…':''}</span><span class="q-status ${h.correct?'ok':'fail'}">${h.timedOut?'⏰ 시간초과':h.correct?'✓ 정답':'✗ 오답'}</span></div>`
+  ).join('');
 }
 
-// ── 제출 → GitHub 저장 ────────────────────────────────
+// ── SUBMIT ──
 async function submitResult() {
-  const btn = document.getElementById('submitBtn');
-  const saving = document.getElementById('savingMsg');
-  btn.disabled = true;
-  saving.classList.add('show');
-
+  const btn = document.getElementById('submitBtn'), sav = document.getElementById('savingMsg');
+  btn.disabled = true; sav.classList.add('show');
   const submission = {
-    name:      userInfo.name,
-    email:     userInfo.email,
-    team:      userInfo.team,
-    job:       userInfo.job,
-    score:     `${score}/10`,
-    scoreNum:  score,
-    level:     score >= 8 ? 'L2~L3' : score >= 5 ? 'L1~L2' : 'L1',
-    usecase:   document.getElementById('inputUsecase').value || '',
-    want:      document.getElementById('inputWant').value || '',
-    comment:   document.getElementById('inputComment').value || '',
-    userAgent: navigator.userAgent,
-    submittedAt: new Date().toISOString(),
-    answers:   history.map((h, i) => ({
-      q: `Q${i+1}`, result: h.timedOut ? '시간초과' : h.correct ? '정답' : '오답'
-    }))
+    name: userInfo.name, email: userInfo.email, team: userInfo.team, job: userInfo.job,
+    score: `${score}/10`, scoreNum: score,
+    level: score >= 8 ? 'L2~L3' : score >= 5 ? 'L1~L2' : 'L1',
+    usecase: userInfo.usecase || '', want: userInfo.want || '', comment: userInfo.comment || '',
+    userAgent: navigator.userAgent, submittedAt: new Date().toISOString(),
+    answers: history.map((h, i) => ({ q: `Q${i+1}`, result: h.timedOut ? '시간초과' : h.correct ? '정답' : '오답' }))
   };
-
   try {
-    // Apps Script: GET + payload + no-cors (CORS 우회, 응답 못 읽지만 저장은 됨)
     const url = APPS_SCRIPT_URL + '?payload=' + encodeURIComponent(JSON.stringify(submission));
     await fetch(url, { mode: 'no-cors' });
-
-    // localStorage 마킹 (중복 방지)
     markSubmitted(userInfo.email, userInfo.name, score);
-
-    saving.classList.remove('show');
+    sav.classList.remove('show');
     document.getElementById('submittedMsg').classList.add('show');
   } catch (e) {
-    saving.classList.remove('show');
-    btn.disabled = false;
+    sav.classList.remove('show'); btn.disabled = false;
     alert('제출 중 오류가 발생했습니다. 다시 시도해주세요.');
-    console.error(e);
   }
 }
 </script>
