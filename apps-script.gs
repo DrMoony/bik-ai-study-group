@@ -124,26 +124,31 @@ function buildLinkEmailHtml(link) {
 
 // ─── 토큰 검증 ───
 function validateToken(token) {
-  if (!token) return { status: 'error', message: 'token required' };
-  const cache = CacheService.getScriptCache();
-  const raw = cache.get('token_' + token);
-  if (!raw) return { status: 'not_found' };
+  try {
+    if (!token) return { status: 'error', message: 'token required' };
+    const cache = CacheService.getScriptCache();
+    const raw = cache.get('token_' + token);
+    console.log('validateToken called, token prefix:', token.substring(0, 8), 'cache hit:', !!raw);
+    if (!raw) return { status: 'not_found' };
 
-  const data = JSON.parse(raw);
-  if (Date.now() > data.expires) {
+    const data = JSON.parse(raw);
+    if (Date.now() > data.expires) {
+      cache.remove('token_' + token);
+      return { status: 'expired' };
+    }
+
+    let userInfo;
+    try { userInfo = JSON.parse(data.userInfo); }
+    catch (e) { userInfo = {}; }
+
+    cache.put('verified_' + data.email, '1', VERIFIED_TTL_SEC);
     cache.remove('token_' + token);
-    return { status: 'expired' };
+
+    return { status: 'verified', userInfo: userInfo };
+  } catch (err) {
+    console.error('validateToken error:', err.toString(), err.stack);
+    return { status: 'error', message: err.toString() };
   }
-
-  let userInfo;
-  try { userInfo = JSON.parse(data.userInfo); }
-  catch (e) { userInfo = {}; }
-
-  // 인증 마크 + 토큰 폐기 (one-time use)
-  cache.put('verified_' + data.email, '1', VERIFIED_TTL_SEC);
-  cache.remove('token_' + token);
-
-  return { status: 'verified', userInfo: userInfo };
 }
 
 function checkEmail(email) {

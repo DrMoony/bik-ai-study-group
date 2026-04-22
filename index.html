@@ -392,27 +392,31 @@ async function checkTokenOnLoad() {
   if (!token) return;
 
   showSection('tokenValidating');
+  console.log('[DEBUG] Token detected:', token.substring(0, 8) + '...', 'length:', token.length);
+  const startTime = Date.now();
   try {
     const res = await jsonpCall('action=validatetoken&token=' + encodeURIComponent(token));
+    console.log('[DEBUG] validateToken response (' + (Date.now() - startTime) + 'ms):', res);
     if (res.status === 'verified' && res.userInfo) {
       userInfo = res.userInfo;
-      // URL에서 토큰 제거 (북마크/공유 방지)
       history.replaceState({}, '', location.pathname);
       showSection('step2');
       return;
     }
-    if (res.status === 'expired')   { alert('링크가 만료되었습니다. 처음부터 다시 요청하세요.'); }
+    if (res.status === 'expired')        { alert('링크가 만료되었습니다. 처음부터 다시 요청하세요.'); }
     else if (res.status === 'not_found') { alert('유효하지 않은 링크입니다. (이미 사용되었거나 잘못된 토큰)'); }
-    else { alert('링크 검증 실패: ' + (res.message || res.status)); }
+    else if (res.status === 'error')     { alert('서버 에러: ' + (res.message || 'unknown')); }
+    else { alert('링크 검증 실패 (' + res.status + '): ' + (res.message || '')); }
     history.replaceState({}, '', location.pathname);
     showSection('step1');
   } catch (e) {
-    alert('서버 응답 없음. 새로고침 후 재시도.');
+    const elapsed = Date.now() - startTime;
+    console.error('[DEBUG] jsonpCall failed after', elapsed + 'ms:', e.message);
+    alert('검증 실패 (' + elapsed + 'ms): ' + e.message + '\n\nF12 콘솔에서 상세 정보 확인 후 공유해주세요.');
     history.replaceState({}, '', location.pathname);
     showSection('step1');
   }
 }
-// 페이지 로드 시 즉시 실행
 checkTokenOnLoad();
 
 // ── 연습 문제 ──
