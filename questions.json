@@ -288,15 +288,15 @@
   {
     "id": 23,
     "difficulty": "hard",
-    "question": "프롬프트에 예시 2~3개를 포함시켜 AI가 패턴을 학습하게 하는 기법은?",
+    "question": "프롬프트 안에 예시 2~3개를 함께 넣어 AI가 같은 패턴으로 응답하게 유도하는 기법은?",
     "options": [
       "Few-shot fine-tuning (퓨샷 파인튜닝)",
       "Few-shot prompting (퓨샷 프롬프팅)",
-      "In-context learning과 구분되는 Transfer learning",
+      "Transfer learning (전이 학습)",
       "Prompt chaining (프롬프트 체이닝)"
     ],
     "answer": 1,
-    "explanation": "'예시로 학습 = 파인튜닝'이라 오해하기 쉽지만(0), few-shot prompting은 가중치를 바꾸지 않고 프롬프트 안에서만 일어남. Transfer learning(2)은 별개 학습 기법, Prompt chaining(3)은 여러 프롬프트를 순차 연결하는 다른 기법."
+    "explanation": "예시를 프롬프트에 '넣기만' 하고 모델 가중치를 건드리지 않으면 prompting. Few-shot fine-tuning(0)은 예시로 실제 파인튜닝을 돌리는 별개 기법(가중치 변경). Transfer learning(2)은 학습된 모델을 다른 태스크로 옮기는 학습 방식. Prompt chaining(3)은 여러 프롬프트를 순차 연결하는 다른 기법."
   },
   {
     "id": 24,
