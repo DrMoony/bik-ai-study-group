@@ -32,7 +32,7 @@
     "options": [
       "AI가 내부적으로 사용하는 프로그래밍 언어",
       "AI에게 작업을 요청하기 위해 입력하는 자연어 지시나 질문",
-      "AI가 응답 전에 참고하는 내부 규칙 문서(System Prompt와 구분)",
+      "AI가 응답 전에 참고하는 내부 규칙 문서",
       "AI가 학습 시 본 예시 데이터의 일부"
     ],
     "answer": 1,
@@ -69,10 +69,10 @@
     "difficulty": "medium",
     "question": "GitHub Copilot이 출시 이후 주력으로 사용해온 기반 모델을 만든 회사는?",
     "options": [
-      "Microsoft (GitHub 모회사)",
+      "Microsoft",
       "OpenAI",
       "GitHub 자체 AI 팀",
-      "Meta (Code Llama 제공)"
+      "Meta"
     ],
     "answer": 1,
     "explanation": "Copilot은 OpenAI의 Codex/GPT 계열을 사용. Microsoft가 GitHub를 인수했다고 해서 자체 모델로 만든 게 아니고(0), GitHub은 별도 AI 팀이 있지 않음(2). Meta의 Code Llama는 별개 모델로 Copilot과 무관(3)."
@@ -108,13 +108,13 @@
     "difficulty": "hard",
     "question": "ChatGPT에게 사내 최신 문서나 논문 DB를 참고해서 답하게 하는 가장 효율적인 기법은?",
     "options": [
-      "파인튜닝 (Fine-tuning) — 해당 문서들로 모델을 재학습",
-      "RAG (Retrieval-Augmented Generation) — 검색 후 답변에 반영",
-      "프롬프트 엔지니어링 — 더 정교한 지시로 성능 향상",
-      "더 큰 모델 선택 — GPT-4 대신 최대 파라미터 모델 사용"
+      "파인튜닝 (Fine-tuning)",
+      "RAG (Retrieval-Augmented Generation)",
+      "프롬프트 엔지니어링 (Prompt Engineering)",
+      "더 큰 모델로 교체 (GPT-4 → GPT-4 Turbo 등)"
     ],
     "answer": 1,
-    "explanation": "'최신 문서 = 재학습 필요'로 오해하기 쉽지만, 파인튜닝은 시간·비용이 많이 들고 새 문서마다 재학습 불가(0). RAG는 검색+생성 조합으로 '실시간 반영'이 가능한 표준. 프롬프트·모델 크기로는 새 지식 주입 불가(2·3)."
+    "explanation": "파인튜닝은 기존 가중치에 추가 학습을 얹는 방식(엄밀히 '재학습'은 아님). 시간·비용이 많이 들고 문서가 바뀔 때마다 돌리기 어려워 자주 갱신되는 정보엔 부적합(0). RAG는 검색+생성 조합으로 '실시간 반영'이 가능한 표준. 프롬프트 엔지니어링·모델 크기 변경으로는 새 지식 주입 불가(2·3)."
   },
   {
     "id": 10,
@@ -173,13 +173,13 @@
     "difficulty": "medium",
     "question": "ChatGPT 같은 범용 AI를 의료 도메인에 특화시키는 방법 중, 모델 '가중치(weights) 자체'를 바꾸는 것은?",
     "options": [
-      "RAG 연동 — 의료 논문 DB를 실시간 검색해 답변에 반영",
-      "퓨샷 프롬프팅 — 의료 예시 3~5개를 프롬프트에 넣기",
-      "System prompt 작성 — 의료 가이드라인을 규칙으로 고정",
-      "파인튜닝 (Fine-tuning) — 의료 데이터로 모델 재학습"
+      "RAG (Retrieval-Augmented Generation) 연동",
+      "Few-shot 프롬프팅",
+      "System Prompt 작성",
+      "파인튜닝 (Fine-tuning)"
     ],
     "answer": 3,
-    "explanation": "네 가지 다 'AI를 의료에 맞추는' 방법이지만, 가중치 변경 = 파인튜닝만 해당. RAG(0)는 외부 검색, 퓨샷(1)과 System prompt(2)는 프롬프트 조작 — 모델 자체는 그대로."
+    "explanation": "네 가지 다 'AI를 의료에 맞추는' 방법이지만, 가중치 변경 = 파인튜닝만 해당. RAG(0)는 외부 검색, Few-shot(1)과 System prompt(2)는 프롬프트 조작 — 모델 자체는 그대로."
   },
   {
     "id": 15,
@@ -248,16 +248,16 @@
   },
   {
     "id": 20,
-    "difficulty": "easy",
-    "question": "다음 중 Anthropic이 만든 AI 모델은?",
+    "difficulty": "medium",
+    "question": "다음 중 Anthropic이 만든 AI 모델 계열은?",
     "options": [
-      "Gemini",
-      "Claude",
-      "Mistral",
-      "Copilot"
+      "Gemma",
+      "Opus",
+      "Llama",
+      "Mistral"
     ],
     "answer": 1,
-    "explanation": "Claude = Anthropic. Gemini = Google, Mistral = 프랑스 Mistral AI, Copilot = Microsoft(기반 모델은 OpenAI)."
+    "explanation": "Opus는 Anthropic Claude의 최상위 tier 모델명 (Claude Opus 4.7 등). Gemma = Google(오픈 모델), Llama = Meta, Mistral = 프랑스 Mistral AI. '브랜드명'보다 '모델명' 수준까지 구분해야 정답 가능 — 난이도 medium으로 재배정."
   },
   {
     "id": 21,
@@ -317,7 +317,7 @@
     "question": "'컨텍스트 윈도우 (Context window)'의 정확한 의미는?",
     "options": [
       "AI가 학습한 전체 데이터의 크기",
-      "한 번의 대화에서 AI가 한꺼번에 참고할 수 있는 텍스트 양(토큰 수)",
+      "한 번의 대화에서 AI가 한꺼번에 참고할 수 있는 텍스트 양",
       "AI가 한 번에 생성할 수 있는 답변의 최대 길이",
       "AI가 과거 대화를 기억하는 최대 기간"
     ],
