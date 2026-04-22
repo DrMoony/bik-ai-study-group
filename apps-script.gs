@@ -109,17 +109,27 @@ function sendMagicLink(email, userInfoStr) {
 }
 
 function buildLinkEmailHtml(link) {
-  return '<div style="font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:520px;margin:20px auto;padding:36px;background:#08312A;color:#E8F5EF;border-radius:12px">' +
+  // Outlook 호환: table 기반 bulletproof button + bgcolor 속성 병행
+  return '<table border="0" cellspacing="0" cellpadding="0" width="100%" bgcolor="#08312A" style="background-color:#08312A;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">' +
+    '<tr><td align="center" style="padding:20px">' +
+    '<table border="0" cellspacing="0" cellpadding="0" width="100%" style="max-width:520px">' +
+    '<tr><td style="padding:36px;color:#E8F5EF">' +
     '<div style="font-size:11px;color:#00E47C;letter-spacing:2px;margin-bottom:16px">BIK AI STUDY GROUP</div>' +
-    '<h2 style="font-size:22px;margin-bottom:12px;color:#E8F5EF">사전설문 인증 링크</h2>' +
-    '<p style="color:#9FC0B2;font-size:14px;line-height:1.7;margin-bottom:28px">아래 버튼을 클릭하면 사전설문을 계속 진행할 수 있습니다. 링크는 30분간만 유효합니다.</p>' +
-    '<div style="text-align:center;margin-bottom:24px">' +
-    '<a href="' + link + '" style="display:inline-block;background:linear-gradient(135deg,#00B362,#00E47C);color:#08312A;text-decoration:none;padding:14px 36px;border-radius:10px;font-weight:700;font-size:16px">설문 계속하기 →</a>' +
-    '</div>' +
-    '<p style="color:#6E9488;font-size:12px;line-height:1.6">버튼이 작동하지 않으면 아래 URL을 직접 복사해 브라우저에 붙여넣으세요:</p>' +
-    '<p style="color:#6E9488;font-size:11px;word-break:break-all;font-family:monospace;background:#0E443A;padding:10px;border-radius:6px">' + link + '</p>' +
-    '<p style="color:#6E9488;font-size:12px;line-height:1.6;margin-top:20px">요청하지 않으셨다면 이 메일을 무시해주세요. 1회 사용 후 자동 폐기됩니다.</p>' +
-    '</div>';
+    '<h2 style="font-size:22px;margin:0 0 12px 0;color:#E8F5EF;font-weight:700">사전설문 인증 링크</h2>' +
+    '<p style="color:#9FC0B2;font-size:14px;line-height:1.7;margin:0 0 28px 0">아래 버튼을 클릭하면 사전설문을 계속 진행할 수 있습니다. 링크는 30분간만 유효합니다.</p>' +
+    // Bulletproof button: table + bgcolor attr + inline bg-color CSS
+    '<table border="0" cellspacing="0" cellpadding="0" align="center" style="margin:0 auto 24px auto">' +
+    '<tr>' +
+    '<td align="center" bgcolor="#00E47C" style="background-color:#00E47C;border-radius:10px;mso-padding-alt:0">' +
+    '<a href="' + link + '" target="_blank" style="display:inline-block;padding:14px 36px;color:#08312A;text-decoration:none;font-weight:700;font-size:16px;border-radius:10px;background-color:#00E47C;mso-padding-alt:0 36px 0 36px">설문 계속하기 →</a>' +
+    '</td>' +
+    '</tr>' +
+    '</table>' +
+    '<p style="color:#6E9488;font-size:12px;line-height:1.6;margin:20px 0 6px 0">버튼이 안 보이면 아래 링크를 직접 클릭하거나 브라우저에 복사해 붙여넣으세요:</p>' +
+    '<p style="margin:0 0 20px 0"><a href="' + link + '" style="color:#4DF09C;text-decoration:underline;font-size:12px;word-break:break-all;font-family:monospace">' + link + '</a></p>' +
+    '<p style="color:#6E9488;font-size:12px;line-height:1.6;margin:0">요청하지 않으셨다면 이 메일을 무시해주세요. 1회 사용 후 자동 폐기됩니다.</p>' +
+    '</td></tr></table>' +
+    '</td></tr></table>';
 }
 
 // ─── 토큰 검증 ───
