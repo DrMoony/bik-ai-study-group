@@ -90,6 +90,18 @@
     </div>
   </div>
 
+  <!-- DISQUALIFIED -->
+  <div id="disqualified" class="section" style="text-align:center">
+    <div style="background:#3D1420;border:1px solid #FF5577;border-radius:16px;padding:40px;margin-top:40px">
+      <div style="font-size:48px;margin-bottom:16px">⛔</div>
+      <h2 style="font-size:22px;margin-bottom:12px;color:#FF8899">실격 처리되었습니다</h2>
+      <p style="color:#FFB0B0;font-size:14px;line-height:1.8">
+        퀴즈 진행 중 <strong>탭/창 전환</strong>이 감지되어 자동 실격 처리되었습니다.<br>
+        재응시는 불가능하며, 이의가 있으면 관리자에게 문의해주세요.
+      </p>
+    </div>
+  </div>
+
   <!-- STEP 1: INTRO + 기본정보 -->
   <div id="step1" class="section active" style="text-align:center">
     <div class="badge">AI STUDY GROUP</div>
@@ -100,6 +112,7 @@
       <li>퀴즈: 30문제 중 <strong style="color:#00E47C">쉬움 5 · 중간 3 · 어려움 2 = 10문제</strong> 출제</li>
       <li>문제당 제한시간 <strong style="color:#00E47C">7초</strong></li>
       <li><strong style="color:#FFC845">1회만 응시 가능</strong>하며, 특정 부정행위는 감시되고 있습니다</li>
+      <li><strong style="color:#FF5577">퀴즈 중 탭/창 전환 시 즉시 실격</strong> (검색·참조 차단)</li>
     </div>
     <div class="form-group"><input type="text" id="inputName" placeholder="이름" /></div>
     <div class="form-group">
@@ -215,6 +228,42 @@ function markSubmitted(email, name, score) {
 let allQuestions = [], selected = [], current = 0, score = 0;
 let history = [], timerInterval = null, timeLeft = TIMER_SECONDS, answered = false;
 let userInfo = {};
+let tabWatchActive = false;
+
+// ── TAB-SWITCH DETECTION ──
+function handleVisibilityChange() {
+  if (!tabWatchActive) return;
+  if (document.hidden) handleDisqualification('tab_switch');
+}
+function activateTabWatch() {
+  if (tabWatchActive) return;
+  tabWatchActive = true;
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+}
+function deactivateTabWatch() {
+  tabWatchActive = false;
+  document.removeEventListener('visibilitychange', handleVisibilityChange);
+}
+function handleDisqualification(reason) {
+  if (!tabWatchActive) return;
+  deactivateTabWatch();
+  clearInterval(timerInterval);
+  const submission = {
+    name: userInfo.name || '', email: userInfo.email || '', team: userInfo.team || '',
+    job: userInfo.interest || '',
+    score: 'DQ', scoreNum: 0, level: 'DISQUALIFIED',
+    usecase: userInfo.usecase || '', want: userInfo.want || '', comment: userInfo.comment || '',
+    userAgent: navigator.userAgent, submittedAt: new Date().toISOString(),
+    disqualified: true, dqReason: reason, progress: `${current + 1}/10`,
+    answers: history.map((h, i) => ({ q: `Q${i+1}`, result: h.timedOut ? '시간초과' : h.correct ? '정답' : '오답' }))
+  };
+  try {
+    const url = APPS_SCRIPT_URL + '?payload=' + encodeURIComponent(JSON.stringify(submission));
+    fetch(url, { mode: 'no-cors' });
+  } catch (e) { /* fire and forget */ }
+  if (userInfo.email) markSubmitted(userInfo.email, userInfo.name, 'DQ');
+  showSection('disqualified');
+}
 
 async function loadQuestions() {
   allQuestions = await (await fetch('questions.json')).json();
@@ -248,7 +297,10 @@ function goToInterview() {
   const prev = checkAlreadySubmitted(email);
   if (prev) {
     const d = JSON.parse(prev);
-    document.getElementById('alreadyMsg').innerHTML = `${d.name}님은 이미 <strong style="color:#00E47C">${d.score}/10</strong>점으로 제출하셨습니다.<br>킥오프: <strong>2026년 4월 29일 (수)</strong>`;
+    const statusHtml = d.score === 'DQ'
+      ? `<strong style="color:#FF5577">실격 처리</strong>되셨습니다`
+      : `<strong style="color:#00E47C">${d.score}/10</strong>점으로 제출하셨습니다`;
+    document.getElementById('alreadyMsg').innerHTML = `${d.name}님은 이미 ${statusHtml}.<br>킥오프: <strong>2026년 4월 29일 (수)</strong>`;
     showSection('alreadyDone'); return;
   }
   userInfo = { name, email, team, interest };
@@ -314,6 +366,7 @@ function showPractice() {
 
 // ── QUIZ ──
 function showQuestion() {
+  activateTabWatch();
   answered = false; clearInterval(timerInterval); timeLeft = TIMER_SECONDS;
   const q = selected[current], idx = current + 1;
   document.getElementById('progressText').textContent = `${idx} / 10`;
@@ -357,7 +410,9 @@ function handleTimeout() {
 }
 function nextQuestion() {
   if (isPractice) { isPractice = false; document.getElementById('nextBtn').textContent = '다음 →'; showQuestion(); return; }
-  current++; if (current >= 10) showResult(); else showQuestion();
+  current++;
+  if (current >= 10) { deactivateTabWatch(); showResult(); }
+  else showQuestion();
 }
 
 // ── RESULT ──
