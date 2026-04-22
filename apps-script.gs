@@ -11,7 +11,7 @@
 // ────────────────────────────────────────────────────────────
 
 const SHEET_ID = '1zvDfCA9sjqZKpWLReT7F8LBPK1neusessEVETLaANKU';
-const SHEET_NAME = '시트1';
+const SHEET_NAME = 'sheet1';  // Google Sheets 탭명과 반드시 일치해야 함
 const SITE_URL = 'https://drmoony.github.io/bik-ai-study-group/';
 
 const HEADERS = ['제출일시', '이름', '이메일', '팀', '직무', '점수', '레벨', 'AI활용경험', '배우고싶은것', '한마디', 'UserAgent'];
