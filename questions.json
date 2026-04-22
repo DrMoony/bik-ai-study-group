@@ -267,10 +267,10 @@
       "모두 GitHub Copilot의 CLI 버전이다",
       "모두 터미널(CLI)에서 대화형으로 작업하는 AI 코딩 어시스턴트다",
       "모두 동일한 Claude 모델을 기반으로 한다",
-      "모두 Visual Studio Code 내장 확장 기능이다"
+      "모두 GUI(에디터 창) 기반의 코딩 어시스턴트다"
     ],
     "answer": 1,
-    "explanation": "Copilot과는 별개 제품(0). 기반 모델은 각각 다름(Claude/Gemini/GPT)(2). VS Code 확장이 아니라 독립 CLI 도구(3). 공통점은 '터미널에서 자연어로 코드 작업'이라는 형식."
+    "explanation": "이름에 CLI가 붙어있듯 터미널 기반 — GUI 어시스턴트(Cursor, Copilot 에디터 내장 등)와 정반대(3). Copilot과는 별개 제품(0). 기반 모델은 각각 다름(Claude/Gemini/GPT)(2)."
   },
   {
     "id": 22,
