@@ -343,12 +343,12 @@
     "question": "AI가 외부 도구·데이터와 표준화된 방식으로 연결되도록 Anthropic이 2024년 공개한 프로토콜은?",
     "options": [
       "OpenAI API",
-      "MCP (Model Context Protocol)",
+      "MCP",
       "ChatGPT Plugins",
       "Webhook"
     ],
     "answer": 1,
-    "explanation": "OpenAI API(0)는 OpenAI 자체 호출 규격. ChatGPT Plugins(2)는 이전 통합 방식(2024년 deprecated). Webhook(3)은 이벤트 알림용 일반 기술. MCP는 AI↔도구 연결을 위한 '표준 프로토콜'로, 업계 전반이 채택 중."
+    "explanation": "MCP = Model Context Protocol. OpenAI API(0)는 OpenAI 자체 호출 규격. ChatGPT Plugins(2)는 이전 통합 방식으로 2024년 deprecated. Webhook(3)은 이벤트 알림용 일반 기술. MCP는 AI↔도구 연결을 위한 '표준 프로토콜'로 업계 전반이 채택 중."
   },
   {
     "id": 28,
@@ -371,10 +371,10 @@
       "양자화 (Quantization)",
       "증류 (Distillation)",
       "가지치기 (Pruning)",
-      "압축 해제 (Decompression)"
+      "압축 (Compression)"
     ],
     "answer": 0,
-    "explanation": "셋 다 모델 경량화 기법이지만 방식이 다름. Distillation(1)은 큰 모델을 '교사'로 작은 '학생' 모델을 새로 훈련, Pruning(2)은 불필요한 파라미터 제거. Quantization은 '숫자 정밀도 낮추기'(float16 → int4 등)."
+    "explanation": "'파일 크기 줄이기 = 압축'이라 혼동(3). 일반적 압축(zip 등)과 달리 양자화는 '숫자 정밀도 자체를 낮추는' 특화 방식. Distillation(1)은 큰 모델을 '교사'로 작은 '학생' 모델을 새로 훈련, Pruning(2)은 불필요한 파라미터 제거. 셋 다 경량화 기법이지만 매커니즘이 다름."
   },
   {
     "id": 30,
