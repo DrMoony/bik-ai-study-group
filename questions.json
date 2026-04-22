@@ -278,12 +278,12 @@
     "question": "2025년 초 중국 DeepSeek-R1이 실리콘밸리에 '패닉'을 일으킨 핵심 이유는?",
     "options": [
       "세계 최초로 reasoning chain(사고 과정)을 오픈소스로 공개",
-      "o1급 추론 성능을 수분의 1 비용으로, MIT 라이선스 오픈소스로 공개",
+      "H100 없이 H800만으로 훈련해 비용을 크게 낮추고, o1급 추론 성능을 MIT 라이선스 오픈소스로 공개",
       "MoE(Mixture of Experts) 구조를 세계 최초로 적용해 효율성 확보",
-      "GPT-4급 성능을 H100 없이 저사양 GPU(H800)만으로 달성"
+      "중국 IT 3사(바이두·텐센트·알리바바)가 공동 개발한 첫 국가 연합 프로젝트"
     ],
     "answer": 1,
-    "explanation": "0·2·3 모두 '부분 사실'이라 함정 — reasoning chain 공개는 맞지만 OpenAI o1이 먼저(chain은 숨김). MoE는 Mixtral(2023)이 먼저. H800 사용은 맞지만 '패닉의 핵심'은 아님. 핵심은 '저비용 + 오픈소스 + MIT 라이선스' 조합."
+    "explanation": "0·2는 '부분 사실' 함정 — reasoning chain 공개는 맞지만 OpenAI o1이 먼저(chain은 숨김). MoE는 Mixtral(2023)이 먼저. 3은 거짓(DeepSeek는 High-Flyer 계열의 독립 회사). 정답은 '저사양 GPU + 저비용 + 오픈소스 + MIT' 조합이 한꺼번에 기존 실리콘밸리 가정(거대 자본·폐쇄 생태계)을 무너뜨렸다는 것."
   },
   {
     "id": 23,
