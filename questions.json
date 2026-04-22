@@ -388,5 +388,18 @@
     ],
     "answer": 0,
     "explanation": "API = 서비스가 외부에 공개하는 '호출 규격'. DB(1)는 데이터 저장소, Library(2)는 내 코드에 import하는 코드 모음, Framework(3)는 앱의 기본 구조. '외부에서 호출'이라는 개념은 API만."
+  },
+  {
+    "id": 31,
+    "difficulty": "hard",
+    "question": "다음 보건·의료 데이터 소스 중 공개 API로 연구자가 자유롭게 접근할 수 없어, 별도 신청·심사·보안 절차가 필요한 것은?",
+    "options": [
+      "PubMed (NCBI E-utilities)",
+      "KOSIS (통계청 OpenAPI)",
+      "NHIS / HIRA (건보공단 · 심평원)",
+      "ClinicalTrials.gov (API v2)"
+    ],
+    "answer": 2,
+    "explanation": "PubMed·KOSIS·ClinicalTrials.gov는 모두 키 발급만 하면 바로 호출 가능한 공개 API 제공. NHIS/HIRA는 환자 단위 진료 데이터 보호를 위해 공개 API 없음 — 빅데이터 분석 센터 방문, IRB 승인, 개별 심사 필요. AI 자동화 시 '즉시 호출 가능' vs '규제로 막힌' 소스를 구분하는 것이 실무 핵심."
   }
 ]
