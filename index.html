@@ -133,7 +133,16 @@
         <option>아직 잘 모르겠음</option>
       </select>
     </div>
-    <button class="btn" id="toInterviewBtn" onclick="goToInterview()">다음: 인터뷰 →</button>
+    <button class="btn" id="sendOtpBtn" onclick="sendOtp()">인증번호 받기 →</button>
+
+    <div id="otpSection" style="display:none;margin-top:16px">
+      <div class="form-group">
+        <input type="text" id="inputOTP" placeholder="6자리 인증번호" maxlength="6" inputmode="numeric" autocomplete="one-time-code" style="letter-spacing:8px;text-align:center;font-size:18px;font-weight:700">
+        <div class="hint" id="otpHint">메일함(스팸함 포함) 확인 · <span id="otpCountdown"></span></div>
+      </div>
+      <button class="btn" id="toInterviewBtn" onclick="goToInterview()">인증 확인 → 다음</button>
+      <button class="btn" id="resendOtpBtn" onclick="sendOtp()" style="margin-top:8px;background:#13584B;border:1px solid #2B7D6C;color:#4DF09C">인증번호 재발송</button>
+    </div>
   </div>
 
   <!-- STEP 2: INTERVIEW (필수, 퀴즈 전) -->
@@ -282,12 +291,12 @@ function showSection(id) {
   window.scrollTo(0, 0);
 }
 
-// ── SERVER EMAIL CHECK (JSONP) ──
-function jsonpCheck(email) {
+// ── JSONP WRAPPER ──
+function jsonpCall(queryString) {
   return new Promise((resolve, reject) => {
     const cb = 'bikCb_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
     const script = document.createElement('script');
-    const timeout = setTimeout(() => { cleanup(); reject(new Error('timeout')); }, 8000);
+    const timeout = setTimeout(() => { cleanup(); reject(new Error('timeout')); }, 15000);
     const cleanup = () => {
       clearTimeout(timeout);
       try { delete window[cb]; } catch (_) { window[cb] = undefined; }
@@ -295,7 +304,7 @@ function jsonpCheck(email) {
     };
     window[cb] = (data) => { cleanup(); resolve(data); };
     script.onerror = () => { cleanup(); reject(new Error('script_error')); };
-    script.src = APPS_SCRIPT_URL + '?check=' + encodeURIComponent(email) + '&callback=' + cb;
+    script.src = APPS_SCRIPT_URL + '?' + queryString + '&callback=' + cb;
     document.head.appendChild(script);
   });
 }
@@ -309,8 +318,34 @@ function showAlreadyDone(name, score, level) {
   showSection('alreadyDone');
 }
 
-// ── STEP 1 → STEP 2 ──
-async function goToInterview() {
+// ── OTP COUNTDOWN ──
+let otpCountdownInterval = null;
+function startOtpCountdown(seconds) {
+  stopOtpCountdown();
+  const display = document.getElementById('otpCountdown');
+  let remaining = seconds;
+  const tick = () => {
+    if (remaining <= 0) {
+      display.textContent = '만료됨';
+      display.style.color = '#FF5577';
+      stopOtpCountdown();
+      return;
+    }
+    const m = Math.floor(remaining / 60);
+    const s = remaining % 60;
+    display.textContent = `남은 시간 ${m}:${String(s).padStart(2, '0')}`;
+    display.style.color = remaining <= 60 ? '#FFC845' : '#00E47C';
+    remaining--;
+  };
+  tick();
+  otpCountdownInterval = setInterval(tick, 1000);
+}
+function stopOtpCountdown() {
+  if (otpCountdownInterval) { clearInterval(otpCountdownInterval); otpCountdownInterval = null; }
+}
+
+// ── STEP 1 → OTP 발송 ──
+async function sendOtp() {
   const name = document.getElementById('inputName').value.trim();
   const email = document.getElementById('inputEmail').value.trim().toLowerCase();
   const team = document.getElementById('inputTeam').value.trim();
@@ -322,7 +357,6 @@ async function goToInterview() {
     return;
   }
 
-  // Local cache check (instant)
   const prev = checkAlreadySubmitted(email);
   if (prev) {
     const d = JSON.parse(prev);
@@ -330,27 +364,72 @@ async function goToInterview() {
     return;
   }
 
-  // Server check (slower; prevents cross-browser/incognito bypass of localStorage)
-  const btn = document.getElementById('toInterviewBtn');
+  userInfo = { name, email, team, interest };
+
+  const otpSection = document.getElementById('otpSection');
+  const firstSend = otpSection.style.display === 'none';
+  const btn = document.getElementById(firstSend ? 'sendOtpBtn' : 'resendOtpBtn');
   const original = btn.textContent;
   btn.disabled = true;
-  btn.textContent = '확인 중...';
+  btn.textContent = '발송 중...';
+
   try {
-    const srv = await jsonpCheck(email);
-    if (srv && srv.status === 'taken') {
-      markSubmitted(email, name, srv.disqualified ? 'DQ' : srv.score);
-      showAlreadyDone(name, srv.score, srv.level);
+    const res = await jsonpCall('action=sendotp&email=' + encodeURIComponent(email));
+    if (res.status === 'already_submitted') {
+      markSubmitted(email, name, res.disqualified ? 'DQ' : res.score);
+      showAlreadyDone(name, res.score, res.level);
       return;
     }
+    if (res.status === 'rate_limited') { alert(res.message || '발송 한도 초과 (1시간 후 재시도)'); return; }
+    if (res.status === 'mail_error')   { alert('메일 발송 실패. 관리자 문의.'); return; }
+    if (res.status === 'sent') {
+      if (firstSend) {
+        document.getElementById('sendOtpBtn').style.display = 'none';
+        otpSection.style.display = 'block';
+      }
+      document.getElementById('inputOTP').value = '';
+      document.getElementById('inputOTP').focus();
+      startOtpCountdown(res.expiresInSec || 600);
+      return;
+    }
+    alert('알 수 없는 응답: ' + JSON.stringify(res));
   } catch (e) {
-    console.warn('Server email check failed, proceeding with local state only:', e.message);
+    alert('서버 응답 없음. 네트워크 확인 후 재시도.');
   } finally {
     btn.disabled = false;
     btn.textContent = original;
   }
+}
 
-  userInfo = { name, email, team, interest };
-  showSection('step2');
+// ── STEP 1 OTP 검증 → STEP 2 ──
+async function goToInterview() {
+  const code = document.getElementById('inputOTP').value.trim();
+  if (!code || code.length < 6) { alert('인증번호 6자리를 입력하세요.'); return; }
+  if (!userInfo.email) { alert('세션 정보 누락. 페이지 새로고침 후 재시도.'); return; }
+
+  const btn = document.getElementById('toInterviewBtn');
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = '확인 중...';
+
+  try {
+    const res = await jsonpCall('action=verifyotp&email=' + encodeURIComponent(userInfo.email) + '&code=' + encodeURIComponent(code));
+    if (res.status === 'verified') {
+      stopOtpCountdown();
+      showSection('step2');
+      return;
+    }
+    if (res.status === 'mismatch')          { alert(`인증번호 틀림. 남은 시도: ${res.attemptsLeft}회`); return; }
+    if (res.status === 'expired')           { alert('인증번호 만료. "재발송" 눌러주세요.'); return; }
+    if (res.status === 'too_many_attempts') { alert('시도 횟수 초과. "재발송" 눌러주세요.'); return; }
+    if (res.status === 'not_found')         { alert('발송된 인증번호 없음. "재발송" 눌러주세요.'); return; }
+    alert('오류: ' + (res.message || JSON.stringify(res)));
+  } catch (e) {
+    alert('서버 응답 없음.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = original;
+  }
 }
 
 // ── 연습 문제 ──
