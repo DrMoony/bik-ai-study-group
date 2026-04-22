@@ -133,7 +133,7 @@
         <option>아직 잘 모르겠음</option>
       </select>
     </div>
-    <button class="btn" onclick="goToInterview()">다음: 인터뷰 →</button>
+    <button class="btn" id="toInterviewBtn" onclick="goToInterview()">다음: 인터뷰 →</button>
   </div>
 
   <!-- STEP 2: INTERVIEW (필수, 퀴즈 전) -->
@@ -282,8 +282,35 @@ function showSection(id) {
   window.scrollTo(0, 0);
 }
 
+// ── SERVER EMAIL CHECK (JSONP) ──
+function jsonpCheck(email) {
+  return new Promise((resolve, reject) => {
+    const cb = 'bikCb_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+    const script = document.createElement('script');
+    const timeout = setTimeout(() => { cleanup(); reject(new Error('timeout')); }, 8000);
+    const cleanup = () => {
+      clearTimeout(timeout);
+      try { delete window[cb]; } catch (_) { window[cb] = undefined; }
+      if (script.parentNode) script.parentNode.removeChild(script);
+    };
+    window[cb] = (data) => { cleanup(); resolve(data); };
+    script.onerror = () => { cleanup(); reject(new Error('script_error')); };
+    script.src = APPS_SCRIPT_URL + '?check=' + encodeURIComponent(email) + '&callback=' + cb;
+    document.head.appendChild(script);
+  });
+}
+
+function showAlreadyDone(name, score, level) {
+  const dq = level === 'DISQUALIFIED' || score === 'DQ';
+  const statusHtml = dq
+    ? `<strong style="color:#FF5577">실격 처리</strong>되셨습니다`
+    : `<strong style="color:#00E47C">${score}</strong>${String(score).includes('/') ? '' : '/10'}점으로 제출하셨습니다`;
+  document.getElementById('alreadyMsg').innerHTML = `${name}님은 이미 ${statusHtml}.<br>킥오프: <strong>2026년 4월 29일 (수)</strong>`;
+  showSection('alreadyDone');
+}
+
 // ── STEP 1 → STEP 2 ──
-function goToInterview() {
+async function goToInterview() {
   const name = document.getElementById('inputName').value.trim();
   const email = document.getElementById('inputEmail').value.trim().toLowerCase();
   const team = document.getElementById('inputTeam').value.trim();
@@ -294,15 +321,34 @@ function goToInterview() {
     const h = document.getElementById('emailHint'); h.textContent = '❌ @boehringer-ingelheim.com 이메일만 참여 가능합니다.'; h.classList.add('err');
     return;
   }
+
+  // Local cache check (instant)
   const prev = checkAlreadySubmitted(email);
   if (prev) {
     const d = JSON.parse(prev);
-    const statusHtml = d.score === 'DQ'
-      ? `<strong style="color:#FF5577">실격 처리</strong>되셨습니다`
-      : `<strong style="color:#00E47C">${d.score}/10</strong>점으로 제출하셨습니다`;
-    document.getElementById('alreadyMsg').innerHTML = `${d.name}님은 이미 ${statusHtml}.<br>킥오프: <strong>2026년 4월 29일 (수)</strong>`;
-    showSection('alreadyDone'); return;
+    showAlreadyDone(d.name, d.score, d.score === 'DQ' ? 'DISQUALIFIED' : '');
+    return;
   }
+
+  // Server check (slower; prevents cross-browser/incognito bypass of localStorage)
+  const btn = document.getElementById('toInterviewBtn');
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = '확인 중...';
+  try {
+    const srv = await jsonpCheck(email);
+    if (srv && srv.status === 'taken') {
+      markSubmitted(email, name, srv.disqualified ? 'DQ' : srv.score);
+      showAlreadyDone(name, srv.score, srv.level);
+      return;
+    }
+  } catch (e) {
+    console.warn('Server email check failed, proceeding with local state only:', e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = original;
+  }
+
   userInfo = { name, email, team, interest };
   showSection('step2');
 }
