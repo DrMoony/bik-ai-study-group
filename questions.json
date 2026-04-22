@@ -2,74 +2,119 @@
   {
     "id": 1,
     "difficulty": "easy",
-    "question": "텍스트, 이미지, 음성을 모두 처리할 수 있는 AI 기능은?",
-    "options": ["멀티모달 (Multimodal)", "파인튜닝 (Fine-tuning)", "임베딩 (Embedding)", "양자화 (Quantization)"],
-    "answer": 0,
-    "explanation": "멀티모달 (Multimodal)은 텍스트·이미지·음성 등 여러 형태의 데이터를 동시에 처리하는 기능입니다."
+    "question": "'멀티모달 (Multimodal)' AI의 정확한 의미는?",
+    "options": [
+      "여러 언어를 동시에 처리할 수 있는 기능",
+      "텍스트·이미지·음성 등 여러 형태의 입력을 하나의 모델이 처리하는 기능",
+      "여러 AI 모델의 답을 결합해 정확도를 높이는 앙상블 기법",
+      "한 번에 여러 작업을 병렬로 처리하는 기능"
+    ],
+    "answer": 1,
+    "explanation": "멀티모달 = 모달리티(데이터 형태)가 여럿이라는 뜻. 언어 종류(0)나 모델 앙상블(2)과 혼동됨. 번역은 단일 모달(텍스트) 내 언어 변환입니다."
   },
   {
     "id": 2,
     "difficulty": "easy",
-    "question": "ChatGPT, Claude, Gemini의 공통점은?",
-    "options": ["모두 Google이 개발했다", "모두 무료 오픈소스다", "모두 대화형 AI 서비스다", "모두 이미지만 생성한다"],
-    "answer": 2,
-    "explanation": "ChatGPT(OpenAI), Claude(Anthropic), Gemini(Google)는 모두 대화형 AI 서비스입니다."
+    "question": "ChatGPT, Claude, Gemini의 공통점으로 가장 정확한 것은?",
+    "options": [
+      "모두 동일한 GPT 모델을 UI만 다르게 제공한다",
+      "모두 대규모 언어 모델(LLM)을 기반으로 한 대화형 AI 서비스다",
+      "모두 오픈소스로 소스코드가 공개되어 있다",
+      "모두 실시간 웹 검색이 기본 방식이다"
+    ],
+    "answer": 1,
+    "explanation": "기반 모델은 각각 다름(GPT/Claude/Gemini). 모두 LLM 기반이라는 점이 공통. 오픈소스도 아니고(0·2 오해), 검색은 부가 기능이지 본질이 아닙니다(3)."
   },
   {
     "id": 3,
     "difficulty": "easy",
-    "question": "AI에게 질문이나 지시를 입력하는 것을 뭐라고 하나요?",
-    "options": ["코딩", "프롬프트", "파이프라인", "백엔드"],
+    "question": "'프롬프트 (Prompt)'란 무엇인가요?",
+    "options": [
+      "AI가 내부적으로 사용하는 프로그래밍 언어",
+      "AI에게 작업을 요청하기 위해 입력하는 자연어 지시나 질문",
+      "AI가 응답 전에 참고하는 내부 규칙 문서(System Prompt와 구분)",
+      "AI가 학습 시 본 예시 데이터의 일부"
+    ],
     "answer": 1,
-    "explanation": "프롬프트(Prompt)는 AI에게 보내는 질문·지시·요청을 말합니다."
+    "explanation": "프롬프트 = 사용자가 AI에 보내는 '자연어' 지시. 코드 아님(0), 학습 데이터와 무관(3). System Prompt는 프롬프트의 한 종류(3번 일부 맞지만 정답은 더 넓은 정의)."
   },
   {
     "id": 4,
     "difficulty": "medium",
-    "question": "AI가 그럴듯하지만 사실이 아닌 내용을 만들어내는 현상은?",
-    "options": ["오버피팅 (Overfitting)", "백프로파게이션 (Backpropagation)", "할루시네이션 (Hallucination)", "디코딩 (Decoding)"],
-    "answer": 2,
-    "explanation": "할루시네이션 (Hallucination)은 AI가 확신 있게 틀린 정보를 생성하는 현상입니다."
+    "question": "AI가 그럴듯하지만 사실이 아닌 내용을 '자신 있게' 만들어내는 현상은?",
+    "options": [
+      "편향 (Bias)",
+      "할루시네이션 (Hallucination)",
+      "과적합 (Overfitting)",
+      "데이터 누수 (Data Leakage)"
+    ],
+    "answer": 1,
+    "explanation": "Bias(편향)는 특정 방향으로 치우친 출력이고, Overfitting은 학습 데이터에만 잘 맞는 현상, Data Leakage는 학습-평가 데이터 혼입 문제. '없는 걸 지어내는' 것만 할루시네이션."
   },
   {
     "id": 5,
     "difficulty": "medium",
-    "question": "LLM이 구조적으로 답할 수 없는 것은?",
-    "options": ["학습 시점 이후에 일어난 최신 사건", "문법 교정", "다국어 번역", "패턴 기반 요약"],
-    "answer": 0,
-    "explanation": "LLM은 학습 컷오프 시점 이후 정보를 모릅니다. 실시간 정보는 별도의 검색 도구와 연동해야 답할 수 있습니다."
+    "question": "검색 도구 연결 없이, 순수한 LLM이 구조적으로 답할 수 없는 것은?",
+    "options": [
+      "3세대 EGFR TKI의 주요 작용기전 설명",
+      "오늘 아침 뉴욕 증시 마감 지수",
+      "영문 의학 논문의 한글 요약",
+      "뉴턴의 운동 법칙 설명"
+    ],
+    "answer": 1,
+    "explanation": "학습 컷오프 이후 발생한 실시간 데이터(증시, 뉴스, 날씨 등)는 순수 LLM이 절대 모름. 전문 지식(0)·고전 지식(3)·문서 처리(2)는 학습 범위 내면 가능. '도메인 전문 지식을 못 다룬다'는 흔한 오해와 다릅니다."
   },
   {
     "id": 6,
     "difficulty": "medium",
     "question": "GitHub Copilot이 출시 이후 주력으로 사용해온 기반 모델을 만든 회사는?",
-    "options": ["Anthropic", "Meta", "OpenAI", "Google"],
-    "answer": 2,
-    "explanation": "GitHub Copilot은 초기부터 OpenAI의 Codex/GPT 계열 모델을 사용했습니다. (Microsoft Copilot은 여러 모델을 혼합 사용)"
+    "options": [
+      "Microsoft (GitHub 모회사)",
+      "OpenAI",
+      "GitHub 자체 AI 팀",
+      "Meta (Code Llama 제공)"
+    ],
+    "answer": 1,
+    "explanation": "Copilot은 OpenAI의 Codex/GPT 계열을 사용. Microsoft가 GitHub를 인수했다고 해서 자체 모델로 만든 게 아니고(0), GitHub은 별도 AI 팀이 있지 않음(2). Meta의 Code Llama는 별개 모델로 Copilot과 무관(3)."
   },
   {
     "id": 7,
     "difficulty": "medium",
-    "question": "인터넷 없이 내 PC에서 AI를 돌릴 수 있는 도구는?",
-    "options": ["ChatGPT 웹", "Google Gemini 앱", "Microsoft Copilot", "Ollama"],
-    "answer": 3,
-    "explanation": "Ollama는 오픈소스 모델을 내 PC에서 직접 실행하는 도구입니다."
+    "question": "인터넷 연결 없이 내 PC에서 LLM을 직접 실행할 수 있는 도구는?",
+    "options": [
+      "ChatGPT Desktop 앱",
+      "Microsoft Copilot for Windows",
+      "Ollama",
+      "Claude 브라우저 확장"
+    ],
+    "answer": 2,
+    "explanation": "Desktop 앱·Windows 통합·브라우저 확장 모두 '로컬 실행'처럼 보이지만 결국 클라우드 API를 호출. Ollama는 모델 파일을 PC에 내려받아 완전 오프라인 실행하는 구조."
   },
   {
     "id": 8,
     "difficulty": "easy",
-    "question": "GPT, Claude, Gemini를 통칭하는 기술 용어는?",
-    "options": ["AGI", "LLM", "CNN", "RPA"],
+    "question": "GPT, Claude, Gemini 같은 최신 대화형 AI의 기반이 되는 '모델 유형'을 통칭하는 용어는?",
+    "options": [
+      "AGI (Artificial General Intelligence)",
+      "LLM (Large Language Model)",
+      "NLP (Natural Language Processing)",
+      "RAG (Retrieval-Augmented Generation)"
+    ],
     "answer": 1,
-    "explanation": "LLM(Large Language Model)은 대규모 언어 모델의 약자로, 이 모델들의 공통 분류입니다."
+    "explanation": "AGI는 아직 실현 안 된 가설적 개념(0), NLP는 연구 분야 이름이고 LLM은 NLP의 특정 모델 유형(2). RAG는 기법 명칭이지 모델 유형이 아님(3)."
   },
   {
     "id": 9,
     "difficulty": "hard",
-    "question": "외부 문서를 참조해서 AI 답변의 정확도를 높이는 기법은?",
-    "options": ["파인튜닝 (Fine-tuning)", "RAG (Retrieval-Augmented Generation)", "양자화 (Quantization)", "토크나이징 (Tokenizing)"],
+    "question": "ChatGPT에게 사내 최신 문서나 논문 DB를 참고해서 답하게 하는 가장 효율적인 기법은?",
+    "options": [
+      "파인튜닝 (Fine-tuning) — 해당 문서들로 모델을 재학습",
+      "RAG (Retrieval-Augmented Generation) — 검색 후 답변에 반영",
+      "프롬프트 엔지니어링 — 더 정교한 지시로 성능 향상",
+      "더 큰 모델 선택 — GPT-4 대신 최대 파라미터 모델 사용"
+    ],
     "answer": 1,
-    "explanation": "RAG (Retrieval-Augmented Generation, 검색 증강 생성)는 외부 문서/DB를 실시간으로 검색한 뒤 그 내용을 AI 답변에 반영하는 기법입니다."
+    "explanation": "'최신 문서 = 재학습 필요'로 오해하기 쉽지만, 파인튜닝은 시간·비용이 많이 들고 새 문서마다 재학습 불가(0). RAG는 검색+생성 조합으로 '실시간 반영'이 가능한 표준. 프롬프트·모델 크기로는 새 지식 주입 불가(2·3)."
   },
   {
     "id": 10,
@@ -82,63 +127,98 @@
       "답변의 용어·관점·맥락이 해당 역할에 맞춰지도록 유도된다"
     ],
     "answer": 3,
-    "explanation": "Role prompt는 단순한 '맥락 지시'일 뿐입니다. 모델 가중치(파인튜닝 ❌), 외부 데이터 접근(RAG ❌), 모델 교체 모두 일어나지 않고, AI가 보고 있는 컨텍스트만 해당 역할로 조정됩니다."
+    "explanation": "Role prompt는 '맥락 지시'일 뿐 — 모델 가중치(0, 파인튜닝 혼동), 외부 접근(1, RAG 혼동), 모델 교체(2, Custom GPT 혼동) 모두 일어나지 않음. AI가 보는 컨텍스트만 해당 역할로 조정됩니다."
   },
   {
     "id": 11,
     "difficulty": "medium",
-    "question": "다음 중 AI 모델과 개발사 매칭이 잘못된 것은?",
-    "options": ["Llama — Meta", "Qwen — 알리바바", "DeepSeek — 중국 DeepSeek사", "Gemma — 삼성"],
-    "answer": 3,
-    "explanation": "Gemma는 Google DeepMind가 만든 오픈 모델입니다. 삼성은 자체 AI 모델로 Gauss가 있습니다."
+    "question": "다음 AI 모델과 개발사 매칭 중 틀린 것은?",
+    "options": [
+      "Llama — Meta",
+      "Qwen — 알리바바",
+      "DeepSeek — 바이두",
+      "Gemma — Google DeepMind"
+    ],
+    "answer": 2,
+    "explanation": "DeepSeek는 2023년 창립된 독립 회사(High-Flyer 계열). 중국 AI = 바이두로 생각하기 쉽지만 바이두의 대표 모델은 ERNIE입니다. 나머지 셋은 모두 사실."
   },
   {
     "id": 12,
     "difficulty": "medium",
-    "question": "2025~26년 AI 업계에서 가장 주목받은 트렌드는?",
-    "options": ["AI 모델 소형화(SLM) 단독", "AI 에이전트와 도구 활용", "이미지 생성 규제 강화", "블록체인과 AI 결합"],
+    "question": "2025~26년 AI 업계에서 가장 주목받은 트렌드로 가장 정확한 것은?",
+    "options": [
+      "AI 모델 소형화(SLM)만으로 저사양 기기 대중화",
+      "AI 에이전트와 외부 도구 활용의 주류화",
+      "생성형 AI의 B2C 구독 모델 확산",
+      "AI 이미지 생성의 상업 일반화"
+    ],
     "answer": 1,
-    "explanation": "AI 에이전트는 외부 도구를 호출·조합해 복잡한 업무를 자율적으로 처리하는 형태로, 2025~26년 최대 트렌드입니다."
+    "explanation": "SLM·구독·이미지 생성 모두 실제 트렌드이지만, 2025~26년 '최대 키워드'는 에이전트와 MCP 같은 도구 연동 표준화. 챗봇에서 자율 업무 수행으로 패러다임 이동이 핵심입니다."
   },
   {
     "id": 13,
     "difficulty": "medium",
-    "question": "OpenAI·Anthropic 등 AI API 사용료 과금의 기준이 되는 단위는?",
-    "options": ["바이트", "토큰", "픽셀", "MB"],
+    "question": "OpenAI·Anthropic 등 AI API 사용료가 산정되는 기본 단위는?",
+    "options": [
+      "문자 수 (Character count)",
+      "토큰 (Token)",
+      "MB (파일 전송량)",
+      "분 (처리 시간)"
+    ],
     "answer": 1,
-    "explanation": "토큰은 AI가 텍스트를 쪼개 처리하는 단위로, API 요금은 입력·출력 토큰 수 기준으로 산정됩니다."
+    "explanation": "문자 단위로 오해하기 쉽지만(0), 실제로는 토큰 — 텍스트를 AI가 처리하는 조각 단위로 나눈 것. 1 token ≈ 0.75 영단어. 한국어는 1 token ≈ 0.5~1 글자. 파일 크기(2)·처리 시간(3) 기준이 아님."
   },
   {
     "id": 14,
     "difficulty": "medium",
-    "question": "ChatGPT 같은 범용 AI 모델을 의료 전문 데이터로 '추가 학습'시켜 도메인 특화시키는 기법의 정확한 명칭은?",
-    "options": ["프롬프팅 (Prompting)", "RAG (Retrieval-Augmented Generation)", "크롤링 (Crawling)", "파인튜닝 (Fine-tuning)"],
+    "question": "ChatGPT 같은 범용 AI를 의료 도메인에 특화시키는 방법 중, 모델 '가중치(weights) 자체'를 바꾸는 것은?",
+    "options": [
+      "RAG 연동 — 의료 논문 DB를 실시간 검색해 답변에 반영",
+      "퓨샷 프롬프팅 — 의료 예시 3~5개를 프롬프트에 넣기",
+      "System prompt 작성 — 의료 가이드라인을 규칙으로 고정",
+      "파인튜닝 (Fine-tuning) — 의료 데이터로 모델 재학습"
+    ],
     "answer": 3,
-    "explanation": "파인튜닝 (Fine-tuning)은 기존 모델 가중치에 특정 도메인 데이터를 재학습시키는 표준 용어입니다. '머신러닝'은 상위 개념이며, 여기에 해당하는 정확한 워딩은 파인튜닝입니다."
+    "explanation": "네 가지 다 'AI를 의료에 맞추는' 방법이지만, 가중치 변경 = 파인튜닝만 해당. RAG(0)는 외부 검색, 퓨샷(1)과 System prompt(2)는 프롬프트 조작 — 모델 자체는 그대로."
   },
   {
     "id": 15,
     "difficulty": "hard",
     "question": "ClinicalTrials.gov를 운영하는 기관은?",
-    "options": ["WHO", "FDA", "NIH", "EMA"],
+    "options": [
+      "WHO (세계보건기구)",
+      "FDA (미국 식품의약국)",
+      "NIH (미국 국립보건원)",
+      "EMA (유럽 의약품청)"
+    ],
     "answer": 2,
-    "explanation": "ClinicalTrials.gov는 미국 NIH(국립보건원)가 운영하는 임상시험 공개 DB입니다."
+    "explanation": "ClinicalTrials.gov는 NIH 산하 National Library of Medicine이 운영. FDA가 운영할 것 같지만 규제기관과 DB 운영은 별도. WHO는 ICTRP라는 별도 국제 등록 포털이 있고, EMA는 EU CTIS."
   },
   {
     "id": 16,
     "difficulty": "medium",
-    "question": "AI '에이전트'가 단순 챗봇과 결정적으로 다른 점은?",
-    "options": ["응답 속도가 10배 빠르다", "스스로 도구를 호출하고 결과를 판단해 다음 행동을 결정한다", "절대 오답을 내지 않는다", "오프라인에서만 작동한다"],
+    "question": "AI 에이전트에 대한 설명으로 가장 정확한 것은?",
+    "options": [
+      "대화 내용을 영구적으로 기억하는 고성능 AI",
+      "주어진 목표를 위해 스스로 도구를 호출하며 여러 단계로 진행하는 AI",
+      "특정 업무에 맞게 커스터마이즈된 GPT (Custom GPT)",
+      "더 큰 모델로 더 정확한 답을 내는 차세대 AI"
+    ],
     "answer": 1,
-    "explanation": "에이전트는 웹 검색·파일 수정·코드 실행 같은 도구를 자율적으로 호출하고, 결과를 보고 다음 단계를 판단합니다. 챗봇은 답변만 생성하고 끝납니다."
+    "explanation": "에이전트 = 메모리(0)도, Custom GPT(2)도, 모델 크기(3)도 아님. 핵심은 '목표→도구 호출→결과 판단→다음 행동'의 자율 반복 루프. 챗봇은 1회 응답, 에이전트는 다단계 자율 진행."
   },
   {
     "id": 17,
     "difficulty": "easy",
-    "question": "사내 AI 활용 시 절대 하면 안 되는 것은?",
-    "options": ["공개 논문을 요약하는 것", "외부 AI에 사내 기밀을 입력하는 것", "AI 답변을 사람이 검증하는 것", "여러 AI 서비스를 비교하는 것"],
+    "question": "제약업계에서 외부 AI(ChatGPT 등)를 사용할 때 가장 피해야 할 행동은?",
+    "options": [
+      "공개된 PubMed 논문을 복사해 요약 요청",
+      "사내 임상 데이터·전략 문서를 그대로 입력해 분석 요청",
+      "AI가 만든 초안을 사람이 팩트체크한 후 활용",
+      "여러 AI를 비교해 작업에 가장 적합한 것을 선택"
+    ],
     "answer": 1,
-    "explanation": "사내 기밀·환자 데이터를 외부 AI에 입력하면 보안 사고 위험이 있습니다."
+    "explanation": "외부 AI = 회사 외부 서버. 사내 기밀·환자 데이터 입력은 학습 데이터로 활용되거나 유출 위험. 나머지 셋은 모두 권장되는 사용 방식."
   },
   {
     "id": 18,
@@ -151,102 +231,162 @@
       "공개 가이드라인(ESMO, NCCN) 원문 분석"
     ],
     "answer": 2,
-    "explanation": "Pre-publication(미공개) 자료는 embargoed 상태라 외부 AI에 입력 시 data leak + publication 정책 위반 위험이 있습니다. '환자 정보'만 조심하면 된다는 오해가 많지만, 실제 MA가 자주 만나는 gray zone은 '공개 예정이지만 아직 공개 전'인 내부 문서입니다."
+    "explanation": "'환자 정보만 조심하면 된다'는 흔한 오해. Pre-publication(미공개) 자료는 embargoed 상태라 외부 AI 입력 시 data leak + publication 정책 위반. 공개 정보(0·1·3)는 안전."
   },
   {
     "id": 19,
     "difficulty": "easy",
-    "question": "GitHub의 주요 용도는?",
-    "options": ["이미지 편집", "메신저 채팅", "코드 저장 및 협업", "동영상 스트리밍"],
-    "answer": 2,
-    "explanation": "GitHub는 코드를 저장하고 협업할 수 있는 플랫폼입니다."
+    "question": "GitHub의 주된 용도로 가장 정확한 것은?",
+    "options": [
+      "온라인 코드 편집기 (IDE)",
+      "코드 버전 관리 및 협업 플랫폼",
+      "파이썬 패키지(npm·PyPI 같은) 레지스트리",
+      "개발자용 블로그 호스팅 서비스"
+    ],
+    "answer": 1,
+    "explanation": "GitHub = Git + Hub. 버전 관리 시스템(Git)에 협업 기능을 얹은 플랫폼. IDE(0)가 아니고(Codespaces는 별도 제품), 패키지 레지스트리(2)도 아니며, 블로그 호스팅(3, GitHub Pages는 부가 기능)도 본질 아님."
   },
   {
     "id": 20,
     "difficulty": "easy",
     "question": "다음 중 Anthropic이 만든 AI 모델은?",
-    "options": ["Gemini", "GPT-4o", "Claude", "Llama"],
-    "answer": 2,
-    "explanation": "Claude는 Anthropic이 만든 AI 모델입니다. Gemini=Google, GPT=OpenAI, Llama=Meta."
+    "options": [
+      "Gemini",
+      "Claude",
+      "Mistral",
+      "Copilot"
+    ],
+    "answer": 1,
+    "explanation": "Claude = Anthropic. Gemini = Google, Mistral = 프랑스 Mistral AI, Copilot = Microsoft(기반 모델은 OpenAI)."
   },
   {
     "id": 21,
     "difficulty": "medium",
     "question": "Claude Code, Gemini CLI, Codex CLI의 공통점은?",
-    "options": ["웹 브라우저에서 실행한다", "터미널에서 실행하는 AI 도구다", "모두 동일한 모델을 쓴다", "모두 Google이 만들었다"],
+    "options": [
+      "모두 GitHub Copilot의 CLI 버전이다",
+      "모두 터미널(CLI)에서 대화형으로 작업하는 AI 코딩 어시스턴트다",
+      "모두 동일한 Claude 모델을 기반으로 한다",
+      "모두 Visual Studio Code 내장 확장 기능이다"
+    ],
     "answer": 1,
-    "explanation": "이 도구들은 모두 터미널(명령줄)에서 실행하는 CLI 기반 AI 도구입니다."
+    "explanation": "Copilot과는 별개 제품(0). 기반 모델은 각각 다름(Claude/Gemini/GPT)(2). VS Code 확장이 아니라 독립 CLI 도구(3). 공통점은 '터미널에서 자연어로 코드 작업'이라는 형식."
   },
   {
     "id": 22,
     "difficulty": "medium",
-    "question": "2025년 초 중국 DeepSeek-R1이 업계에 준 충격의 핵심은?",
-    "options": ["세계 최초 상용 AI 모델 출시", "최상위 수준의 추론 성능을 저비용 오픈소스로 공개", "한국 기업과의 공동 개발", "최초의 AI 이미지 생성 모델"],
+    "question": "2025년 초 중국 DeepSeek-R1이 실리콘밸리에 '패닉'을 일으킨 핵심 이유는?",
+    "options": [
+      "세계 최초로 reasoning chain(사고 과정)을 오픈소스로 공개",
+      "o1급 추론 성능을 수분의 1 비용으로, MIT 라이선스 오픈소스로 공개",
+      "MoE(Mixture of Experts) 구조를 세계 최초로 적용해 효율성 확보",
+      "GPT-4급 성능을 H100 없이 저사양 GPU(H800)만으로 달성"
+    ],
     "answer": 1,
-    "explanation": "DeepSeek-R1은 OpenAI o1급 추론 성능을 획기적으로 낮은 비용에 오픈소스로 공개해, '대기업만 가능'이라는 통념을 깼습니다."
+    "explanation": "0·2·3 모두 '부분 사실'이라 함정 — reasoning chain 공개는 맞지만 OpenAI o1이 먼저(chain은 숨김). MoE는 Mixtral(2023)이 먼저. H800 사용은 맞지만 '패닉의 핵심'은 아님. 핵심은 '저비용 + 오픈소스 + MIT 라이선스' 조합."
   },
   {
     "id": 23,
     "difficulty": "hard",
-    "question": "AI에게 예시 2~3개를 보여주고 같은 패턴으로 처리하라는 기법은?",
-    "options": ["제로샷 (Zero-shot)", "퓨샷 (Few-shot)", "원샷 배치 (One-shot batch)", "멀티태스킹 (Multi-task)"],
+    "question": "프롬프트에 예시 2~3개를 포함시켜 AI가 패턴을 학습하게 하는 기법은?",
+    "options": [
+      "Few-shot fine-tuning (퓨샷 파인튜닝)",
+      "Few-shot prompting (퓨샷 프롬프팅)",
+      "In-context learning과 구분되는 Transfer learning",
+      "Prompt chaining (프롬프트 체이닝)"
+    ],
     "answer": 1,
-    "explanation": "퓨샷 (Few-shot)은 소수의 예시를 주면 AI가 패턴을 파악해 같은 방식으로 답하는 기법입니다. 예시 0개=Zero-shot, 1개=One-shot."
+    "explanation": "'예시로 학습 = 파인튜닝'이라 오해하기 쉽지만(0), few-shot prompting은 가중치를 바꾸지 않고 프롬프트 안에서만 일어남. Transfer learning(2)은 별개 학습 기법, Prompt chaining(3)은 여러 프롬프트를 순차 연결하는 다른 기법."
   },
   {
     "id": 24,
     "difficulty": "easy",
     "question": "다음 중 AI 이미지 생성 도구는?",
-    "options": ["Midjourney", "Ollama", "LangChain", "Pandas"],
+    "options": [
+      "Midjourney",
+      "Ollama",
+      "Perplexity",
+      "NotebookLM"
+    ],
     "answer": 0,
-    "explanation": "Midjourney는 텍스트로 고품질 이미지를 생성하는 도구입니다."
+    "explanation": "Midjourney = 이미지 생성. Ollama = 로컬 LLM 실행, Perplexity = AI 검색, NotebookLM = 문서 Q&A. 네 개 모두 유명 AI 도구지만 각자 다른 용도."
   },
   {
     "id": 25,
     "difficulty": "medium",
-    "question": "'AI가 한 번에 참고할 수 있는 텍스트 길이의 한계'를 뭐라고 하나요?",
-    "options": ["해상도 (Resolution)", "배치 사이즈 (Batch size)", "컨텍스트 윈도우 (Context window)", "에포크 (Epoch)"],
-    "answer": 2,
-    "explanation": "컨텍스트 윈도우 (Context window)는 AI가 한 대화에서 처리할 수 있는 최대 토큰 수입니다."
+    "question": "'컨텍스트 윈도우 (Context window)'의 정확한 의미는?",
+    "options": [
+      "AI가 학습한 전체 데이터의 크기",
+      "한 번의 대화에서 AI가 한꺼번에 참고할 수 있는 텍스트 양(토큰 수)",
+      "AI가 한 번에 생성할 수 있는 답변의 최대 길이",
+      "AI가 과거 대화를 기억하는 최대 기간"
+    ],
+    "answer": 1,
+    "explanation": "입력+출력 모두 합친 '작업 공간' 크기. 학습 데이터 크기(0)·출력 길이(2)·메모리 기간(3)과 모두 혼동됨. Claude Sonnet 4.6 기본 200K, Opus 4.7은 최대 1M 토큰."
   },
   {
     "id": 26,
     "difficulty": "medium",
     "question": "다음 중 AI 코딩 어시스턴트가 아닌 것은?",
-    "options": ["GitHub Copilot", "Codex", "NotebookLM", "Claude Code"],
+    "options": [
+      "GitHub Copilot",
+      "Codex",
+      "NotebookLM",
+      "Claude Code"
+    ],
     "answer": 2,
-    "explanation": "NotebookLM은 Google의 AI 기반 노트·리서치 도구로 문서 Q&A가 주 기능입니다. 코딩 특화 어시스턴트는 아닙니다."
+    "explanation": "NotebookLM = Google의 문서 Q&A/리서치 도구. 문서를 업로드하면 그 내용 기반으로 대화하지만, 코드 작성·편집·실행 기능은 없음. 나머지 셋은 모두 코딩 특화."
   },
   {
     "id": 27,
     "difficulty": "hard",
-    "question": "'AI가 외부 서비스(Drive, Slack 등)와 데이터를 주고받는 연결 표준'은?",
-    "options": ["API 게이트웨이 (API Gateway)", "MCP (Model Context Protocol)", "웹훅 (Webhook)", "OAuth"],
+    "question": "AI가 외부 도구·데이터와 표준화된 방식으로 연결되도록 Anthropic이 2024년 공개한 프로토콜은?",
+    "options": [
+      "OpenAI API",
+      "MCP (Model Context Protocol)",
+      "ChatGPT Plugins",
+      "Webhook"
+    ],
     "answer": 1,
-    "explanation": "MCP (Model Context Protocol)는 AI가 외부 도구·데이터와 표준화된 방식으로 연결되는 규격입니다. Anthropic이 2024년 공개했고 현재 업계 표준으로 확장 중."
+    "explanation": "OpenAI API(0)는 OpenAI 자체 호출 규격. ChatGPT Plugins(2)는 이전 통합 방식(2024년 deprecated). Webhook(3)은 이벤트 알림용 일반 기술. MCP는 AI↔도구 연결을 위한 '표준 프로토콜'로, 업계 전반이 채택 중."
   },
   {
     "id": 28,
     "difficulty": "medium",
-    "question": "'AI에게 말로 설명하면 AI가 코드를 짜주는 개발 방식'은?",
-    "options": ["노코드 플랫폼 (No-code)", "바이브 코딩 (Vibe Coding)", "페어 프로그래밍 (Pair Programming)", "TDD (Test-Driven Development)"],
-    "answer": 1,
-    "explanation": "바이브 코딩 (Vibe Coding)은 자연어로 AI에게 설명하면 AI가 코드를 생성·수정하는 개발 방식으로, 2025년부터 확산된 트렌드입니다."
+    "question": "'AI에게 원하는 기능을 설명만 하면 AI가 코드를 짜주고, 결과를 보며 대화로 조율해 앱을 만드는' 2025년 확산된 개발 방식은?",
+    "options": [
+      "바이브 코딩 (Vibe Coding)",
+      "노코드 플랫폼 (No-code)",
+      "AI 자동 생성 (Auto-code Generation)",
+      "페어 프로그래밍 (Pair Programming)"
+    ],
+    "answer": 0,
+    "explanation": "바이브 코딩은 자연어 설명+반복 조율이 핵심. No-code(1)는 GUI 드래그앤드롭 방식, Auto-code Generation(2)은 사람 개입 없는 자동 생성, Pair Programming(3)은 사람 둘이서 번갈아 코딩. 모두 비슷해 보이지만 다름."
   },
   {
     "id": 29,
     "difficulty": "hard",
-    "question": "대형 모델(수십~수백억 파라미터)을 메모리가 적은 기기에도 올릴 수 있도록 파일 크기를 줄이는 대표적 기법은?",
-    "options": ["파인튜닝", "프롬프팅", "양자화(Quantization)", "토크나이징"],
-    "answer": 2,
-    "explanation": "양자화는 모델 가중치의 정밀도를 낮춰(예: 16bit → 4bit) 파일 크기와 메모리 사용을 크게 줄이는 기법입니다. 작은 모델은 양자화 없이도 돌릴 수 있지만, 70B 같은 대형 모델은 양자화가 거의 필수입니다."
+    "question": "AI 모델의 '가중치 정밀도'를 낮춰(예: 16bit → 4bit) 파일 크기와 메모리 사용을 줄이는 기법은?",
+    "options": [
+      "양자화 (Quantization)",
+      "증류 (Distillation)",
+      "가지치기 (Pruning)",
+      "압축 해제 (Decompression)"
+    ],
+    "answer": 0,
+    "explanation": "셋 다 모델 경량화 기법이지만 방식이 다름. Distillation(1)은 큰 모델을 '교사'로 작은 '학생' 모델을 새로 훈련, Pruning(2)은 불필요한 파라미터 제거. Quantization은 '숫자 정밀도 낮추기'(float16 → int4 등)."
   },
   {
     "id": 30,
     "difficulty": "easy",
-    "question": "프로그램끼리 서로의 기능을 호출하거나 데이터를 주고받기 위해 정해둔 '약속된 연결 규격'은?",
-    "options": ["API", "GPU", "SDK", "IDE"],
+    "question": "Slack이나 OpenAI가 '외부 프로그램이 우리 기능을 호출할 수 있도록' 공개하는 정해진 호출 방식을 뭐라고 하나요?",
+    "options": [
+      "API (Application Programming Interface)",
+      "Database (DB)",
+      "Library (라이브러리)",
+      "Framework (프레임워크)"
+    ],
     "answer": 0,
-    "explanation": "API(Application Programming Interface)는 프로그램 간 소통을 위한 '약속된 호출 방식'입니다. 예: OpenAI API, Slack API로 외부에서 기능을 호출."
+    "explanation": "API = 서비스가 외부에 공개하는 '호출 규격'. DB(1)는 데이터 저장소, Library(2)는 내 코드에 import하는 코드 모음, Framework(3)는 앱의 기본 구조. '외부에서 호출'이라는 개념은 API만."
   }
 ]
