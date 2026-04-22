@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "difficulty": "easy",
     "question": "텍스트, 이미지, 음성을 모두 처리할 수 있는 AI 기능은?",
     "options": ["멀티모달", "파인튜닝", "임베딩", "양자화"],
     "answer": 0,
@@ -8,6 +9,7 @@
   },
   {
     "id": 2,
+    "difficulty": "easy",
     "question": "ChatGPT, Claude, Gemini의 공통점은?",
     "options": ["모두 Google이 개발했다", "모두 무료 오픈소스다", "모두 대화형 AI 서비스다", "모두 이미지만 생성한다"],
     "answer": 2,
@@ -15,6 +17,7 @@
   },
   {
     "id": 3,
+    "difficulty": "easy",
     "question": "AI에게 질문이나 지시를 입력하는 것을 뭐라고 하나요?",
     "options": ["코딩", "프롬프트", "파이프라인", "백엔드"],
     "answer": 1,
@@ -22,6 +25,7 @@
   },
   {
     "id": 4,
+    "difficulty": "medium",
     "question": "AI가 그럴듯하지만 사실이 아닌 내용을 만들어내는 현상은?",
     "options": ["오버피팅", "백프로파게이션", "할루시네이션", "디코딩"],
     "answer": 2,
@@ -29,6 +33,7 @@
   },
   {
     "id": 5,
+    "difficulty": "medium",
     "question": "다음 중 현재 AI가 가장 잘 못하는 것은?",
     "options": ["대량 문서 요약", "다국어 번역", "윤리적 가치 판단", "텍스트 패턴 분석"],
     "answer": 2,
@@ -36,6 +41,7 @@
   },
   {
     "id": 6,
+    "difficulty": "medium",
     "question": "Microsoft Copilot의 기반 모델을 만든 회사는?",
     "options": ["Anthropic", "Meta", "OpenAI", "Google"],
     "answer": 2,
@@ -43,6 +49,7 @@
   },
   {
     "id": 7,
+    "difficulty": "medium",
     "question": "인터넷 없이 내 PC에서 AI를 돌릴 수 있는 도구는?",
     "options": ["ChatGPT 웹", "Google Gemini 앱", "Microsoft Copilot", "Ollama"],
     "answer": 3,
@@ -50,6 +57,7 @@
   },
   {
     "id": 8,
+    "difficulty": "easy",
     "question": "GPT, Claude, Gemini를 통칭하는 기술 용어는?",
     "options": ["AGI", "LLM", "CNN", "RPA"],
     "answer": 1,
@@ -57,6 +65,7 @@
   },
   {
     "id": 9,
+    "difficulty": "hard",
     "question": "외부 문서를 참조해서 AI 답변의 정확도를 높이는 기법은?",
     "options": ["파인튜닝", "검색 증강 생성", "양자화", "토크나이징"],
     "answer": 1,
@@ -64,6 +73,7 @@
   },
   {
     "id": 10,
+    "difficulty": "medium",
     "question": "'넌 제약업계 MA 전문가야'라고 AI에게 역할을 부여하는 이유는?",
     "options": ["API 비용이 줄어든다", "응답 속도가 빨라진다", "보안 수준이 올라간다", "도메인 맥락이 반영된다"],
     "answer": 3,
@@ -71,6 +81,7 @@
   },
   {
     "id": 11,
+    "difficulty": "medium",
     "question": "다음 중 오픈소스 AI 모델과 출시 국가가 틀린 것은?",
     "options": ["Llama — 미국(Meta)", "Qwen — 중국(알리바바)", "DeepSeek — 중국", "Gemma — 한국(삼성)"],
     "answer": 3,
@@ -78,6 +89,7 @@
   },
   {
     "id": 12,
+    "difficulty": "medium",
     "question": "2025~26년 AI 업계 최대 키워드는?",
     "options": ["AI 윈터(침체기)", "AI 에이전트", "AI 이미지 규제법", "AI 모델 소형화"],
     "answer": 1,
@@ -85,6 +97,7 @@
   },
   {
     "id": 13,
+    "difficulty": "medium",
     "question": "AI가 텍스트를 처리하는 기본 단위는?",
     "options": ["픽셀", "토큰", "바이트", "프레임"],
     "answer": 1,
@@ -92,6 +105,7 @@
   },
   {
     "id": 14,
+    "difficulty": "medium",
     "question": "기존 AI를 의료 데이터로 추가 학습시키는 것은?",
     "options": ["프롬프팅", "크롤링", "디플로이", "파인튜닝"],
     "answer": 3,
@@ -99,6 +113,7 @@
   },
   {
     "id": 15,
+    "difficulty": "hard",
     "question": "ClinicalTrials.gov를 운영하는 기관은?",
     "options": ["WHO", "FDA", "NIH", "EMA"],
     "answer": 2,
@@ -106,6 +121,7 @@
   },
   {
     "id": 16,
+    "difficulty": "medium",
     "question": "AI 에이전트의 핵심 특징은?",
     "options": ["사람보다 빠르게 타이핑한다", "외부 도구를 조합해 업무를 처리한다", "항상 100% 정확한 답을 낸다", "인터넷 없이만 작동한다"],
     "answer": 1,
@@ -113,6 +129,7 @@
   },
   {
     "id": 17,
+    "difficulty": "easy",
     "question": "사내 AI 활용 시 절대 하면 안 되는 것은?",
     "options": ["공개 논문을 요약하는 것", "외부 AI에 사내 기밀을 입력하는 것", "AI 답변을 사람이 검증하는 것", "여러 AI 서비스를 비교하는 것"],
     "answer": 1,
@@ -120,6 +137,7 @@
   },
   {
     "id": 18,
+    "difficulty": "medium",
     "question": "다음 중 MA 실무에서 AI를 즉시 적용하기 어려운 것은?",
     "options": ["공개 논문 비교 분석", "학회 발표 자료 요약", "사내 환자 DB 직접 연동", "ClinicalTrials.gov 검색"],
     "answer": 2,
@@ -127,6 +145,7 @@
   },
   {
     "id": 19,
+    "difficulty": "easy",
     "question": "GitHub의 주요 용도는?",
     "options": ["이미지 편집", "메신저 채팅", "코드 저장 및 협업", "동영상 스트리밍"],
     "answer": 2,
@@ -134,6 +153,7 @@
   },
   {
     "id": 20,
+    "difficulty": "easy",
     "question": "다음 중 Anthropic이 만든 AI 모델은?",
     "options": ["Gemini", "GPT-4o", "Claude", "Llama"],
     "answer": 2,
@@ -141,6 +161,7 @@
   },
   {
     "id": 21,
+    "difficulty": "medium",
     "question": "Claude Code, Gemini CLI, Codex CLI의 공통점은?",
     "options": ["웹 브라우저에서 실행한다", "터미널에서 실행하는 AI 도구다", "모두 동일한 모델을 쓴다", "모두 Google이 만들었다"],
     "answer": 1,
@@ -148,6 +169,7 @@
   },
   {
     "id": 22,
+    "difficulty": "medium",
     "question": "DeepSeek가 2025년 초 주목받은 핵심 이유는?",
     "options": ["세계 최초 AI 모델 출시", "적은 비용으로 최상위급 성능 달성", "한국 스타트업이 개발", "이미지 생성 분야 1위 달성"],
     "answer": 1,
@@ -155,6 +177,7 @@
   },
   {
     "id": 23,
+    "difficulty": "hard",
     "question": "AI에게 예시 2~3개를 보여주고 같은 패턴으로 처리하라는 기법은?",
     "options": ["제로샷", "퓨샷", "원샷 배치", "멀티태스킹"],
     "answer": 1,
@@ -162,6 +185,7 @@
   },
   {
     "id": 24,
+    "difficulty": "easy",
     "question": "다음 중 AI 이미지 생성 도구는?",
     "options": ["Midjourney", "Ollama", "LangChain", "Pandas"],
     "answer": 0,
@@ -169,6 +193,7 @@
   },
   {
     "id": 25,
+    "difficulty": "medium",
     "question": "'AI가 한 번에 참고할 수 있는 텍스트 길이의 한계'를 뭐라고 하나요?",
     "options": ["해상도", "배치 사이즈", "컨텍스트 윈도우", "에포크"],
     "answer": 2,
@@ -176,6 +201,7 @@
   },
   {
     "id": 26,
+    "difficulty": "medium",
     "question": "다음 중 AI 코딩 지원 도구가 아닌 것은?",
     "options": ["GitHub Copilot", "Cursor", "Tableau", "Claude Code"],
     "answer": 2,
@@ -183,6 +209,7 @@
   },
   {
     "id": 27,
+    "difficulty": "hard",
     "question": "'AI가 외부 서비스(Drive, Slack 등)와 데이터를 주고받는 연결 표준'은?",
     "options": ["API 게이트웨이", "MCP", "웹훅", "OAuth"],
     "answer": 1,
@@ -190,6 +217,7 @@
   },
   {
     "id": 28,
+    "difficulty": "medium",
     "question": "'AI에게 말로 설명하면 AI가 코드를 짜주는 개발 방식'은?",
     "options": ["노코드 플랫폼", "바이브 코딩", "페어 프로그래밍", "테스트 주도 개발"],
     "answer": 1,
@@ -197,6 +225,7 @@
   },
   {
     "id": 29,
+    "difficulty": "hard",
     "question": "AI 모델을 압축해서 일반 PC에서도 돌릴 수 있게 하는 기법은?",
     "options": ["파인튜닝", "프롬프팅", "양자화", "토크나이징"],
     "answer": 2,
@@ -204,6 +233,7 @@
   },
   {
     "id": 30,
+    "difficulty": "easy",
     "question": "'소프트웨어 간에 데이터를 주고받는 표준 인터페이스'를 뭐라고 하나요?",
     "options": ["API", "GPU", "SDK", "IDE"],
     "answer": 0,
