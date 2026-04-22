@@ -109,7 +109,7 @@
     <p class="sub">사전 인터뷰 (3분) → 퀴즈 (10문제, 7초) → 결과 확인</p>
     <div class="rules">
       <li>인터뷰: 3개 질문에 자유롭게 답변 (필수)</li>
-      <li>퀴즈: 30문제 중 <strong style="color:#00E47C">쉬움 5 · 중간 3 · 어려움 2 = 10문제</strong> 출제</li>
+      <li>퀴즈: 31문제 중 <strong style="color:#00E47C">중간 7 · 어려움 3 = 10문제</strong> 출제</li>
       <li>문제당 제한시간 <strong style="color:#00E47C">7초</strong></li>
       <li><strong style="color:#FFC845">1회만 응시 가능</strong>하며, 특정 부정행위는 감시되고 있습니다</li>
       <li><strong style="color:#FF5577">퀴즈 중 탭/창 전환 시 즉시 실격</strong> (검색·참조 차단)</li>
@@ -436,10 +436,9 @@ function goToQuiz() {
   if (!uc || !wt || !cm) { alert('모든 인터뷰 질문에 답해주세요.'); return; }
   if (!document.getElementById('chkCommit').checked || !document.getElementById('chkExtra').checked) { alert('참여 동의 항목을 모두 체크해주세요.'); return; }
   userInfo.usecase = uc; userInfo.want = wt; userInfo.comment = cm;
-  const easyPool = allQuestions.filter(q => q.difficulty === 'easy');
   const mediumPool = allQuestions.filter(q => q.difficulty === 'medium');
   const hardPool = allQuestions.filter(q => q.difficulty === 'hard');
-  const picked = [...shuffle(easyPool).slice(0, 5), ...shuffle(mediumPool).slice(0, 3), ...shuffle(hardPool).slice(0, 2)];
+  const picked = [...shuffle(mediumPool).slice(0, 7), ...shuffle(hardPool).slice(0, 3)];
   selected = shuffle(picked);
   current = 0; score = 0; history = [];
   showSection('step3');

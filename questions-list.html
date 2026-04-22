@@ -42,13 +42,12 @@
 </head>
 <body>
   <div class="wrap">
-    <h1>전체 문제 리스트 (30문항)</h1>
-    <p class="sub">실제 출제: 쉬움 5 · 중간 3 · 어려움 2 = 10문제 · 문제당 7초</p>
+    <h1>전체 문제 리스트</h1>
+    <p class="sub">실제 출제: 중간 7 · 어려움 3 = 10문제 · 문제당 7초</p>
     <div class="summary" id="summary"></div>
     <div class="controls">
       <button class="toggle" id="toggleBtn" onclick="toggleAnswers()">정답 보기</button>
       <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">전체</button>
-      <button class="filter-btn" data-filter="easy" onclick="setFilter('easy')">쉬움</button>
       <button class="filter-btn" data-filter="medium" onclick="setFilter('medium')">중간</button>
       <button class="filter-btn" data-filter="hard" onclick="setFilter('hard')">어려움</button>
     </div>
@@ -65,7 +64,6 @@
       const counts = loadedQs.reduce((a, q) => { a[q.difficulty] = (a[q.difficulty] || 0) + 1; return a; }, {});
       document.getElementById('summary').innerHTML = `
         <span class="pill total">전체 ${loadedQs.length}</span>
-        <span class="pill easy">쉬움 ${counts.easy || 0}</span>
         <span class="pill medium">중간 ${counts.medium || 0}</span>
         <span class="pill hard">어려움 ${counts.hard || 0}</span>
       `;

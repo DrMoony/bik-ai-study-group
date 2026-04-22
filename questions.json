@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "difficulty": "easy",
+    "difficulty": "medium",
     "question": "'멀티모달 (Multimodal)' AI의 정확한 의미는?",
     "options": [
       "여러 언어를 동시에 처리할 수 있는 기능",
@@ -14,7 +14,7 @@
   },
   {
     "id": 2,
-    "difficulty": "easy",
+    "difficulty": "medium",
     "question": "ChatGPT, Claude, Gemini의 공통점으로 가장 정확한 것은?",
     "options": [
       "모두 동일한 GPT 모델을 UI만 다르게 제공한다",
@@ -27,7 +27,7 @@
   },
   {
     "id": 3,
-    "difficulty": "easy",
+    "difficulty": "medium",
     "question": "'프롬프트 (Prompt)'란 무엇인가요?",
     "options": [
       "AI가 내부적으로 사용하는 프로그래밍 언어",
@@ -92,7 +92,7 @@
   },
   {
     "id": 8,
-    "difficulty": "easy",
+    "difficulty": "medium",
     "question": "GPT, Claude, Gemini 같은 최신 대화형 AI의 기반이 되는 '모델 유형'을 통칭하는 용어는?",
     "options": [
       "AGI (Artificial General Intelligence)",
@@ -209,7 +209,7 @@
   },
   {
     "id": 17,
-    "difficulty": "easy",
+    "difficulty": "medium",
     "question": "제약업계에서 외부 AI(ChatGPT 등)를 사용할 때 가장 피해야 할 행동은?",
     "options": [
       "공개된 PubMed 논문을 복사해 요약 요청",
@@ -235,7 +235,7 @@
   },
   {
     "id": 19,
-    "difficulty": "easy",
+    "difficulty": "medium",
     "question": "GitHub의 주된 용도로 가장 정확한 것은?",
     "options": [
       "온라인 코드 편집기 (IDE)",
@@ -300,7 +300,7 @@
   },
   {
     "id": 24,
-    "difficulty": "easy",
+    "difficulty": "medium",
     "question": "다음 중 AI 이미지 생성 도구는?",
     "options": [
       "Midjourney",
@@ -378,7 +378,7 @@
   },
   {
     "id": 30,
-    "difficulty": "easy",
+    "difficulty": "medium",
     "question": "Slack이나 OpenAI가 '외부 프로그램이 우리 기능을 호출할 수 있도록' 공개하는 정해진 호출 방식을 뭐라고 하나요?",
     "options": [
       "API (Application Programming Interface)",
