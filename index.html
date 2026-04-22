@@ -399,7 +399,7 @@ async function checkTokenOnLoad() {
     console.log('[DEBUG] validateToken response (' + (Date.now() - startTime) + 'ms):', res);
     if (res.status === 'verified' && res.userInfo) {
       userInfo = res.userInfo;
-      history.replaceState({}, '', location.pathname);
+      window.history.replaceState({}, '', location.pathname);
       showSection('step2');
       return;
     }
@@ -407,13 +407,13 @@ async function checkTokenOnLoad() {
     else if (res.status === 'not_found') { alert('유효하지 않은 링크입니다. (이미 사용되었거나 잘못된 토큰)'); }
     else if (res.status === 'error')     { alert('서버 에러: ' + (res.message || 'unknown')); }
     else { alert('링크 검증 실패 (' + res.status + '): ' + (res.message || '')); }
-    history.replaceState({}, '', location.pathname);
+    window.history.replaceState({}, '', location.pathname);
     showSection('step1');
   } catch (e) {
     const elapsed = Date.now() - startTime;
     console.error('[DEBUG] jsonpCall failed after', elapsed + 'ms:', e.message);
     alert('검증 실패 (' + elapsed + 'ms): ' + e.message + '\n\nF12 콘솔에서 상세 정보 확인 후 공유해주세요.');
-    history.replaceState({}, '', location.pathname);
+    window.history.replaceState({}, '', location.pathname);
     showSection('step1');
   }
 }
