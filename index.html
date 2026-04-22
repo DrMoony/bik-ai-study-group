@@ -489,9 +489,16 @@ function showQuestion() {
   document.getElementById('feedback').classList.remove('show', 'correct-fb', 'wrong-fb');
   document.getElementById('nextBtn').classList.remove('show');
   updateTimer(TIMER_SECONDS);
+
+  // 옵션 셔플 — 위치 편향 제거
+  const indexed = q.options.map((opt, i) => ({ opt, isCorrect: i === q.answer }));
+  const shuffled = shuffle(indexed);
+  q._shuffledOptions = shuffled.map(x => x.opt);
+  q._shuffledAnswer = shuffled.findIndex(x => x.isCorrect);
+
   const container = document.getElementById('optionsContainer');
   container.innerHTML = '';
-  q.options.forEach((opt, i) => {
+  q._shuffledOptions.forEach((opt, i) => {
     const btn = document.createElement('button'); btn.className = 'option-btn'; btn.textContent = opt;
     btn.onclick = () => selectAnswer(i); container.appendChild(btn);
   });
@@ -500,7 +507,7 @@ function showQuestion() {
 function updateTimer(n) { const el = document.getElementById('timerNum'); el.textContent = n; el.classList.toggle('urgent', n <= 2); }
 function selectAnswer(idx) {
   if (answered) return; answered = true; clearInterval(timerInterval);
-  const q = selected[current], correct = q.answer, ok = idx === correct;
+  const q = selected[current], correct = q._shuffledAnswer !== undefined ? q._shuffledAnswer : q.answer, ok = idx === correct;
   document.querySelectorAll('.option-btn').forEach((b, i) => { b.disabled = true; if (i === correct) b.classList.add(idx === i ? 'correct' : 'reveal'); if (i === idx && !ok) b.classList.add('wrong'); });
   if (ok) score++;
   history.push({ question: q.question, correct: ok, timedOut: false });
@@ -512,11 +519,13 @@ function selectAnswer(idx) {
 function handleTimeout() {
   if (answered) return; answered = true;
   const q = selected[current];
-  document.querySelectorAll('.option-btn').forEach((b, i) => { b.disabled = true; if (i === q.answer) b.classList.add('reveal'); });
+  const correctIdx = q._shuffledAnswer !== undefined ? q._shuffledAnswer : q.answer;
+  const correctOpt = q._shuffledOptions ? q._shuffledOptions[correctIdx] : q.options[q.answer];
+  document.querySelectorAll('.option-btn').forEach((b, i) => { b.disabled = true; if (i === correctIdx) b.classList.add('reveal'); });
   history.push({ question: q.question, correct: false, timedOut: true });
   document.getElementById('timeoutMsg').classList.add('show');
   const fb = document.getElementById('feedback');
-  fb.textContent = '⏱ 시간 초과. 정답: ' + q.options[q.answer] + ' — ' + q.explanation;
+  fb.textContent = '⏱ 시간 초과. 정답: ' + correctOpt + ' — ' + q.explanation;
   fb.className = 'feedback show wrong-fb';
   document.getElementById('nextBtn').classList.add('show');
 }
