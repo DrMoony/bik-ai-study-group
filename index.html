@@ -228,7 +228,26 @@ function markSubmitted(email, name, score) {
 let allQuestions = [], selected = [], current = 0, score = 0;
 let history = [], timerInterval = null, timeLeft = TIMER_SECONDS, answered = false;
 let userInfo = {};
+let userIp = null;
 let tabWatchActive = false;
+
+// ── IP 조회 (페이지 로드 즉시, non-blocking) ──
+async function fetchClientIp() {
+  try {
+    const res = await fetch('https://api.ipify.org?format=json');
+    const data = await res.json();
+    userIp = data.ip || 'unknown';
+  } catch (e) {
+    try {
+      const res2 = await fetch('https://ipapi.co/json/');
+      const data2 = await res2.json();
+      userIp = data2.ip || 'unknown';
+    } catch (e2) {
+      userIp = 'fetch_failed';
+    }
+  }
+}
+fetchClientIp();
 
 // ── TAB-SWITCH DETECTION ──
 function handleVisibilityChange() {
@@ -253,7 +272,7 @@ function handleDisqualification(reason) {
     job: userInfo.interest || '',
     score: 'DQ', scoreNum: 0, level: 'DISQUALIFIED',
     usecase: userInfo.usecase || '', want: userInfo.want || '', comment: userInfo.comment || '',
-    userAgent: navigator.userAgent, submittedAt: new Date().toISOString(),
+    userAgent: navigator.userAgent, ip: userIp || 'pending', submittedAt: new Date().toISOString(),
     disqualified: true, dqReason: reason, progress: `${current + 1}/10`,
     answers: history.map((h, i) => ({ q: `Q${i+1}`, result: h.timedOut ? '시간초과' : h.correct ? '정답' : '오답' }))
   };
@@ -455,7 +474,7 @@ async function submitResult() {
     score: `${score}/10`, scoreNum: score,
     level: score >= 8 ? 'L2~L3' : score >= 5 ? 'L1~L2' : 'L1',
     usecase: userInfo.usecase || '', want: userInfo.want || '', comment: userInfo.comment || '',
-    userAgent: navigator.userAgent, submittedAt: new Date().toISOString(),
+    userAgent: navigator.userAgent, ip: userIp || 'pending', submittedAt: new Date().toISOString(),
     answers: history.map((h, i) => ({ q: `Q${i+1}`, result: h.timedOut ? '시간초과' : h.correct ? '정답' : '오답' }))
   };
   try {

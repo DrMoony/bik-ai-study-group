@@ -14,7 +14,7 @@ const SHEET_ID = '1zvDfCA9sjqZKpWLReT7F8LBPK1neusessEVETLaANKU';
 const SHEET_NAME = 'sheet1';  // Google Sheets 탭명과 반드시 일치해야 함
 const SITE_URL = 'https://drmoony.github.io/bik-ai-study-group/';
 
-const HEADERS = ['제출일시', '이름', '이메일', '팀', '직무', '점수', '레벨', 'AI활용경험', '배우고싶은것', '한마디', 'UserAgent'];
+const HEADERS = ['제출일시', '이름', '이메일', '팀', '직무', '점수', '레벨', 'AI활용경험', '배우고싶은것', '한마디', 'UserAgent', 'IP'];
 
 const TOKEN_TTL_SEC = 1800;        // 매직링크 유효: 30분
 const VERIFIED_TTL_SEC = 3600;     // 인증 후 제출 유예: 60분
@@ -201,7 +201,7 @@ function saveSubmission(data) {
     data.name, data.email, data.team, data.job,
     data.score, data.level,
     data.usecase || '', data.want || '', data.comment || '',
-    data.userAgent || ''
+    data.userAgent || '', data.ip || ''
   ]);
 
   return { status: 'ok' };
