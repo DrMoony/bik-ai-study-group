@@ -19,7 +19,7 @@ const HEADERS = ['제출일시', '이름', '이메일', '팀', '직무', '점수
 const TOKEN_TTL_SEC = 1800;        // 매직링크 유효: 30분
 const VERIFIED_TTL_SEC = 3600;     // 인증 후 제출 유예: 60분
 const MAX_SENDS_PER_HOUR = 3;
-const REQUIRE_VERIFIED_ON_SUBMIT = true;
+const REQUIRE_VERIFIED_ON_SUBMIT = false;  // Honor system: 이메일 인증 없이 제출 허용
 
 function doGet(e) {
   const cb = e.parameter && e.parameter.callback;

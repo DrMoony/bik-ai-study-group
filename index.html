@@ -133,32 +133,7 @@
         <option>아직 잘 모르겠음</option>
       </select>
     </div>
-    <button class="btn" id="sendLinkBtn" onclick="sendMagicLink()">인증 링크 받기 →</button>
-  </div>
-
-  <!-- LINK SENT (대기 화면) -->
-  <div id="linkSent" class="section" style="text-align:center">
-    <div class="badge">이메일 인증</div>
-    <div style="background:#0E443A;border:1px solid #1F5B4E;border-radius:16px;padding:40px;margin-top:24px">
-      <div style="font-size:48px;margin-bottom:16px">📩</div>
-      <h2 style="font-size:22px;margin-bottom:12px">메일을 확인해주세요</h2>
-      <p id="linkSentEmail" style="color:#4DF09C;font-size:15px;font-weight:600;margin-bottom:8px"></p>
-      <p style="color:#9FC0B2;font-size:14px;line-height:1.7;margin-bottom:24px">
-        인증 링크가 발송되었습니다.<br>
-        메일함(스팸함 포함)에서 링크를 클릭하면 계속 진행됩니다.<br>
-        링크는 <strong style="color:#FFC845">30분간</strong> 유효합니다.
-      </p>
-      <button class="btn" id="resendLinkBtn" onclick="sendMagicLink(true)" style="background:#13584B;border:1px solid #2B7D6C;color:#4DF09C">링크 재발송</button>
-    </div>
-  </div>
-
-  <!-- TOKEN VALIDATING -->
-  <div id="tokenValidating" class="section" style="text-align:center">
-    <div style="background:#0E443A;border:1px solid #1F5B4E;border-radius:16px;padding:40px;margin-top:40px">
-      <div style="font-size:48px;margin-bottom:16px">⏳</div>
-      <h2 style="font-size:20px;margin-bottom:12px">인증 중...</h2>
-      <p style="color:#9FC0B2;font-size:14px">링크를 검증하고 있습니다.</p>
-    </div>
+    <button class="btn" id="toInterviewBtn" onclick="goToInterview()">다음: 인터뷰 →</button>
   </div>
 
   <!-- STEP 2: INTERVIEW (필수, 퀴즈 전) -->
@@ -307,24 +282,6 @@ function showSection(id) {
   window.scrollTo(0, 0);
 }
 
-// ── JSONP WRAPPER ──
-function jsonpCall(queryString) {
-  return new Promise((resolve, reject) => {
-    const cb = 'bikCb_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
-    const script = document.createElement('script');
-    const timeout = setTimeout(() => { cleanup(); reject(new Error('timeout')); }, 15000);
-    const cleanup = () => {
-      clearTimeout(timeout);
-      try { delete window[cb]; } catch (_) { window[cb] = undefined; }
-      if (script.parentNode) script.parentNode.removeChild(script);
-    };
-    window[cb] = (data) => { cleanup(); resolve(data); };
-    script.onerror = () => { cleanup(); reject(new Error('script_error')); };
-    script.src = APPS_SCRIPT_URL + '?' + queryString + '&callback=' + cb;
-    document.head.appendChild(script);
-  });
-}
-
 function showAlreadyDone(name, score, level) {
   const dq = level === 'DISQUALIFIED' || score === 'DQ';
   const statusHtml = dq
@@ -334,8 +291,8 @@ function showAlreadyDone(name, score, level) {
   showSection('alreadyDone');
 }
 
-// ── STEP 1 → 매직링크 발송 ──
-async function sendMagicLink(isResend) {
+// ── STEP 1 → STEP 2 (Honor system: 이메일 인증 없이 바로 진행) ──
+function goToInterview() {
   const name = document.getElementById('inputName').value.trim();
   const email = document.getElementById('inputEmail').value.trim().toLowerCase();
   const team = document.getElementById('inputTeam').value.trim();
@@ -355,69 +312,8 @@ async function sendMagicLink(isResend) {
   }
 
   userInfo = { name, email, team, interest };
-
-  const btn = document.getElementById(isResend ? 'resendLinkBtn' : 'sendLinkBtn');
-  const original = btn.textContent;
-  btn.disabled = true;
-  btn.textContent = '발송 중...';
-
-  try {
-    const payload = encodeURIComponent(JSON.stringify(userInfo));
-    const res = await jsonpCall('action=magiclink&email=' + encodeURIComponent(email) + '&userinfo=' + payload);
-    if (res.status === 'already_submitted') {
-      markSubmitted(email, name, res.disqualified ? 'DQ' : res.score);
-      showAlreadyDone(name, res.score, res.level);
-      return;
-    }
-    if (res.status === 'rate_limited') { alert(res.message || '발송 한도 초과 (1시간 후 재시도)'); return; }
-    if (res.status === 'mail_error')   { alert('메일 발송 실패. 관리자 문의.'); return; }
-    if (res.status === 'sent') {
-      document.getElementById('linkSentEmail').textContent = email;
-      showSection('linkSent');
-      return;
-    }
-    alert('알 수 없는 응답: ' + JSON.stringify(res));
-  } catch (e) {
-    alert('서버 응답 없음. Apps Script 재배포 확인 후 재시도.');
-  } finally {
-    btn.disabled = false;
-    btn.textContent = original;
-  }
+  showSection('step2');
 }
-
-// ── PAGE LOAD: ?token= 감지 → 자동 검증 → STEP 2 ──
-async function checkTokenOnLoad() {
-  const params = new URLSearchParams(location.search);
-  const token = params.get('token');
-  if (!token) return;
-
-  showSection('tokenValidating');
-  console.log('[DEBUG] Token detected:', token.substring(0, 8) + '...', 'length:', token.length);
-  const startTime = Date.now();
-  try {
-    const res = await jsonpCall('action=validatetoken&token=' + encodeURIComponent(token));
-    console.log('[DEBUG] validateToken response (' + (Date.now() - startTime) + 'ms):', res);
-    if (res.status === 'verified' && res.userInfo) {
-      userInfo = res.userInfo;
-      window.history.replaceState({}, '', location.pathname);
-      showSection('step2');
-      return;
-    }
-    if (res.status === 'expired')        { alert('링크가 만료되었습니다. 처음부터 다시 요청하세요.'); }
-    else if (res.status === 'not_found') { alert('유효하지 않은 링크입니다. (이미 사용되었거나 잘못된 토큰)'); }
-    else if (res.status === 'error')     { alert('서버 에러: ' + (res.message || 'unknown')); }
-    else { alert('링크 검증 실패 (' + res.status + '): ' + (res.message || '')); }
-    window.history.replaceState({}, '', location.pathname);
-    showSection('step1');
-  } catch (e) {
-    const elapsed = Date.now() - startTime;
-    console.error('[DEBUG] jsonpCall failed after', elapsed + 'ms:', e.message);
-    alert('검증 실패 (' + elapsed + 'ms): ' + e.message + '\n\nF12 콘솔에서 상세 정보 확인 후 공유해주세요.');
-    window.history.replaceState({}, '', location.pathname);
-    showSection('step1');
-  }
-}
-checkTokenOnLoad();
 
 // ── 연습 문제 ──
 const PRACTICE = {
